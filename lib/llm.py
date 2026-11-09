@@ -35,3 +35,41 @@ def friendly_error(exc: Exception) -> None:
         st.warning("The free AI quota is busy right now (lots of people trying demos). Please try again in a minute.")
     else:
         st.error(f"Something went wrong: {text[:300]}")
+
+
+# --- Free-tier resilience ---------------------------------------------------------------
+# Groq's free tier has per-model rate limits. Every project's OpenAI client goes through
+# these patched methods: on a 429 for the big model, the same request is retried once on
+# the smaller model (separate quota) instead of failing the demo.
+FALLBACK = {SMART: FAST}
+
+
+def _patch_openai() -> None:
+    import openai
+    from openai.resources.chat.completions import AsyncCompletions, Completions
+
+    if getattr(Completions.create, "_zotriq_patched", False):
+        return
+    sync_create, async_create = Completions.create, AsyncCompletions.create
+
+    def create(self, *args, **kwargs):
+        try:
+            return sync_create(self, *args, **kwargs)
+        except openai.RateLimitError:
+            if kwargs.get("model") not in FALLBACK:
+                raise
+            return sync_create(self, *args, **{**kwargs, "model": FALLBACK[kwargs["model"]]})
+
+    async def acreate(self, *args, **kwargs):
+        try:
+            return await async_create(self, *args, **kwargs)
+        except openai.RateLimitError:
+            if kwargs.get("model") not in FALLBACK:
+                raise
+            return await async_create(self, *args, **{**kwargs, "model": FALLBACK[kwargs["model"]]})
+
+    create._zotriq_patched = True
+    Completions.create, AsyncCompletions.create = create, acreate
+
+
+_patch_openai()
