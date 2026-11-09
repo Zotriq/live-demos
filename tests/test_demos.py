@@ -21,13 +21,13 @@ TIMEOUT = 240
 def page(name: str) -> AppTest:
     at = AppTest.from_file(str(ROOT / "demos" / f"{name}.py"), default_timeout=TIMEOUT)
     at.run()
-    assert not at.exception, at.exception
+    assert not at.exception, at.exception[0].message[:600]
     return at
 
 
 def click(at: AppTest, label: str) -> AppTest:
     [b for b in at.button if b.label.startswith(label)][0].click().run()
-    assert not at.exception, at.exception
+    assert not at.exception, at.exception[0].message[:600]
     return at
 
 
@@ -49,7 +49,7 @@ def report(name: str, at: AppTest) -> str:
 def test_home():
     at = AppTest.from_file(str(ROOT / "streamlit_app.py"), default_timeout=60)
     at.run()
-    assert not at.exception, at.exception
+    assert not at.exception, at.exception[0].message[:600]
 
 
 def test_postgres_tuning():
@@ -108,7 +108,7 @@ def test_whatsapp():
     for msg in ["Hi! What services do you have and how much is a facial?",
                 "Can I book a haircut tomorrow at 4pm? My name is Ali"]:
         at.chat_input[0].set_value(msg).run()
-        assert not at.exception, at.exception
+        assert not at.exception, at.exception[0].message[:600]
     chat = at.session_state["wa"]["chat"]
     print("\n===== whatsapp =====")
     for m in chat:
@@ -123,7 +123,7 @@ def test_voice_receptionist():
     for msg in ["Hi, I'd like to book a check-up next Tuesday, what times do you have?",
                 "The earliest one please. My name is Sam Lee and my number is 555 0100."]:
         at.chat_input[0].set_value(msg).run()
-        assert not at.exception, at.exception
+        assert not at.exception, at.exception[0].message[:600]
     v = at.session_state["voice"]
     print("\n===== voice =====")
     for role, text in v["transcript"]:
