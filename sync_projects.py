@@ -17,7 +17,7 @@ ROOT = Path(__file__).parent / "projects"
 REPOS = [
     "ai-phishing-detector", "postgres-performance-tuning", "sql-etl-pipeline", "postgres-mcp-server",
     "invoice-extraction-pipeline", "langgraph-support-agents", "voice-ai-receptionist", "whatsapp-ai-agent",
-    "stripe-crm-automation", "multitenant-rag-saas", "n8n-meeting-notes-to-clickup", "ai-lead-qualification-agent",
+    "stripe-crm-automation", "multitenant-rag-saas", "n8n-meeting-notes-to-clickup", "ai-lead-qualification-agent", "research-agent",
 ]
 SKIP = {".git", ".github", "tests", "node_modules", "__pycache__", "docs", "datasets", ".gitignore", "LICENSE", "frontend"}
 

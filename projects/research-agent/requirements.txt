@@ -1,0 +1,10 @@
+langchain-groq
+python-dotenv
+pydantic>=2
+pymupdf
+requests
+fastapi
+uvicorn[standard]
+anyio
+colorama
+pytest

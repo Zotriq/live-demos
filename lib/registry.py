@@ -13,5 +13,6 @@ DEMOS = [
     ("demos/meeting_notes.py", "Meeting Notes → ClickUp (n8n)", "meeting-notes", ":material/event_note:", "AI automation"),
     ("demos/multitenant_rag.py", "Multi-tenant RAG SaaS", "multitenant-rag", ":material/domain:", "RAG"),
     ("demos/lead_qualifier.py", "AI Lead Qualification Agent", "lead-qualifier", ":material/leaderboard:", "AI agents"),
+    ("demos/research_agent.py", "ReAct Research Agent", "research-agent", ":material/travel_explore:", "AI agents"),
     ("demos/phishing.py", "AI Phishing Detector", "phishing-detector", ":material/shield:", "Machine learning"),
 ]

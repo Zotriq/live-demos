@@ -185,3 +185,12 @@ def test_lead_qualifier():
     print("\n===== lead qualifier =====\n", rules["score"], ai["ai_score"], ai["final_score"], ai.get("qualification_status"),
           ai.get("ai_available"), "\n", email["subject"], "\n", email["body"][:400])
     assert ai["ai_available"]
+
+
+@needs_groq
+def test_research_agent():
+    at = page("research_agent")
+    at.text_input[0].set_value("Compare the population of Lahore and Karachi and say which is larger.")
+    click(at, "Research")
+    print("\n===== research agent =====\n", at.session_state["research_answer"])
+    assert at.session_state["research_answer"]
