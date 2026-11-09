@@ -1,0 +1,45 @@
+name: Deploy demos to Hugging Face
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      spaces:
+        description: "Space folder names, space-separated (empty = all)"
+        required: false
+        default: ""
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q "huggingface_hub>=0.30" gradio_client requests
+      - name: Pick spaces to deploy
+        id: pick
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "names=${{ github.event.inputs.spaces }}" >> "$GITHUB_OUTPUT"
+          elif git diff --name-only HEAD~1 HEAD | grep -qE '^(shared/|deploy.py)'; then
+            echo "names=" >> "$GITHUB_OUTPUT"
+          else
+            names=$(git diff --name-only HEAD~1 HEAD | grep '^spaces/' | cut -d/ -f2 | sort -u | tr '\n' ' ')
+            echo "names=${names:-none}" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Deploy and smoke-test
+        if: steps.pick.outputs.names != 'none'
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: python deploy.py ${{ steps.pick.outputs.names }}

@@ -1,0 +1,12 @@
+{
+  "title": "AI Phishing Detector",
+  "emoji": "🛡️",
+  "short_description": "Flags phishing links and scam emails, and explains why",
+  "source": "Zotriq/ai-phishing-detector",
+  "secrets": [],
+  "smoke": [
+    {"api_name": "/check_url", "args": ["http://paypal-secure-login.com.verify-account.ru/login?id=123"], "expect": "Phishing"},
+    {"api_name": "/check_url", "args": ["https://www.google.com"], "expect": "Safe"},
+    {"api_name": "/check_email", "args": ["URGENT! You have won a FREE prize. Call now to claim your cash reward"], "expect": "Phishing"}
+  ]
+}
