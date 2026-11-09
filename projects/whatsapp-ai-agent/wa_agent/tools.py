@@ -19,10 +19,14 @@ TOOL_SCHEMAS = [
         "name": "list_services", "description": "Services with prices and durations, plus opening hours and policies.",
         "parameters": {"type": "object", "properties": {}}}},
     {"type": "function", "function": {
-        "name": "check_availability", "description": "Free start times for a service on a date (YYYY-MM-DD).",
+        "name": "check_availability",
+        "description": "Free start times for a service on a date (YYYY-MM-DD). If the customer asked for a time, "
+                       "pass it as `time` (HH:MM, 24h) to check it and get the closest free alternatives.",
         "parameters": {"type": "object", "properties": {
             "service": {"type": "string", "enum": list(BUSINESS["services"])},
-            "date": {"type": "string"}}, "required": ["service", "date"]}}},
+            "date": {"type": "string"},
+            "time": {"type": "string", "description": "Optional preferred start time, HH:MM 24h"}},
+            "required": ["service", "date"]}}},
     {"type": "function", "function": {
         "name": "book_appointment", "description": "Book after the customer confirmed service, date, time and name.",
         "parameters": {"type": "object", "properties": {
@@ -81,11 +85,22 @@ def make_tools(salon: Salon, phone: str, on_handoff: Callable[[str], None]) -> d
             "address": BUSINESS["address"], "policies": BUSINESS["faq"],
         }
 
-    def check_availability(service: str, date: str) -> dict:
+    def check_availability(service: str, date: str, time: str | None = None) -> dict:
         day = dt.date.fromisoformat(date)
         times = salon.free_times(service, day)
-        return {"date": day.strftime("%A %d %B"), "service": services[service]["label"],
-                "free_times": [fmt(t) for t in times[:8]], "more": max(0, len(times) - 8)}
+        result = {"date": day.strftime("%A %d %B"), "service": services[service]["label"]}
+        if time:
+            wanted = dt.time.fromisoformat(time)
+            result["requested_time"] = fmt(wanted)
+            result["requested_time_free"] = wanted in times
+            # Offer the free slots closest to what the customer asked for, in time order.
+            minutes = lambda t: t.hour * 60 + t.minute  # noqa: E731
+            times = sorted(sorted(times, key=lambda t: abs(minutes(t) - minutes(wanted)))[:8])
+        else:
+            result["more"] = max(0, len(times) - 8)
+            times = times[:8]
+        result["free_times"] = [fmt(t) for t in times]
+        return result
 
     def book_appointment(service: str, date: str, time: str, name: str) -> dict:
         day, start_t = dt.date.fromisoformat(date), dt.time.fromisoformat(time)
