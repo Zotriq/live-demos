@@ -133,3 +133,17 @@ def test_voice_receptionist():
     click(at, "Hang up")
     print("CALLS:", v["server"].get("/calls").json())
     assert any(w[0] == "check_availability" for w in v["webhooks"])
+
+
+def test_stripe():
+    at = page("stripe_crm")
+    click(at, "Send webhook")
+    click(at, "Resend same event")
+    click(at, "Send with forged signature")
+    s = at.session_state["stripe"]
+    for row in s["log"]:
+        print(row)
+    print("CALLS", [(c["service"], c["status"]) for c in s["calls"]], "EMAILS", [e["subject"] for e in s["emails"]])
+    assert [r["response"][:3] for r in s["log"]] == ["200", "200", "400"]
+    assert "'duplicate': True" in s["log"][1]["response"]
+    assert len(s["calls"]) == 2 and len(s["emails"]) == 1

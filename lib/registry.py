@@ -9,5 +9,6 @@ DEMOS = [
     ("demos/support_agents.py", "LangGraph Support Agents", "support-agents", ":material/support_agent:", "AI agents"),
     ("demos/whatsapp.py", "WhatsApp AI Agent", "whatsapp-agent", ":material/chat:", "AI agents"),
     ("demos/voice.py", "Voice AI Receptionist", "voice-receptionist", ":material/call:", "AI agents"),
+    ("demos/stripe_crm.py", "Stripe → CRM Automation", "stripe-crm", ":material/payments:", "AI automation"),
     ("demos/phishing.py", "AI Phishing Detector", "phishing-detector", ":material/shield:", "Machine learning"),
 ]
