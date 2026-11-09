@@ -32,7 +32,8 @@ def click(at: AppTest, label: str) -> AppTest:
 
 
 def texts(at: AppTest) -> str:
-    parts = [m.value for m in at.markdown] + [c.value for c in at.code]
+    parts = [m.value for m in at.markdown if not str(m.value).startswith("<")] + [c.value for c in at.code]
+    parts += [h.value for h in at.subheader] + [c.value for c in at.caption]
     parts += [f"{k.label}={k.value}" for k in at.metric]
     for kind in ("success", "warning", "error", "info"):
         parts += [f"[{kind}] {e.value}" for e in getattr(at, kind)]

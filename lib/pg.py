@@ -33,6 +33,12 @@ def _pg18_bin() -> Path:
     return target / "bin"
 
 
+def _run(cmd: list, env: dict) -> None:
+    result = subprocess.run(cmd, capture_output=True, text=True, env=env)
+    if result.returncode != 0:
+        raise RuntimeError(f"{Path(cmd[0]).name} failed: {(result.stderr or result.stdout).strip()[-800:]}")
+
+
 @st.cache_resource(show_spinner="Starting PostgreSQL…")
 def full() -> str:
     """Start PostgreSQL 18 and return a libpq connection string."""
@@ -40,11 +46,9 @@ def full() -> str:
     data = Path(tempfile.mkdtemp(prefix="pgdata-"))
     sock = Path(tempfile.mkdtemp(prefix="pgsock-"))
     env = {**os.environ, "LC_ALL": "C"}
-    subprocess.run([bindir / "initdb", "-D", data, "-U", "postgres", "--auth=trust", "-E", "UTF8", "--no-instructions"],
-                   check=True, capture_output=True, env=env)
+    _run([bindir / "initdb", "-D", data, "-U", "postgres", "--auth=trust", "-E", "UTF8", "--no-instructions"], env)
     opts = f"-k {sock} -c listen_addresses='' -c shared_buffers=128MB -c max_connections=20 -c fsync=off -c synchronous_commit=off -c full_page_writes=off -c max_parallel_workers_per_gather=0"
-    subprocess.run([bindir / "pg_ctl", "-D", data, "-o", opts, "-l", data / "log.txt", "-w", "start"],
-                   check=True, capture_output=True, env=env)
+    _run([bindir / "pg_ctl", "-D", data, "-o", opts, "-l", data / "log.txt", "-w", "start"], env)
     return f"host={sock} user=postgres dbname=postgres"
 
 
