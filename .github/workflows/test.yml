@@ -20,4 +20,12 @@ jobs:
       - name: Click through every demo
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-        run: pytest tests -s -v --tb=short
+        run: |
+          set -o pipefail
+          pytest tests -s -v --tb=short -p no:warnings 2>&1 | tee pytest.log
+      - name: Put the test output on the run summary page
+        if: always()
+        run: |
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          tail -c 60000 pytest.log >> "$GITHUB_STEP_SUMMARY" || true
+          echo '```' >> "$GITHUB_STEP_SUMMARY"

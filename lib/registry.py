@@ -8,5 +8,6 @@ DEMOS = [
     ("demos/invoice.py", "Invoice Extraction Pipeline", "invoice-extraction", ":material/receipt_long:", "AI automation"),
     ("demos/support_agents.py", "LangGraph Support Agents", "support-agents", ":material/support_agent:", "AI agents"),
     ("demos/whatsapp.py", "WhatsApp AI Agent", "whatsapp-agent", ":material/chat:", "AI agents"),
+    ("demos/voice.py", "Voice AI Receptionist", "voice-receptionist", ":material/call:", "AI agents"),
     ("demos/phishing.py", "AI Phishing Detector", "phishing-detector", ":material/shield:", "Machine learning"),
 ]

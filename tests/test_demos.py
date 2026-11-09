@@ -114,3 +114,22 @@ def test_whatsapp():
         print(("ME:  " if m["me"] else "BOT: ") + m["body"])
     print(report("whatsapp side panel", at)[-1200:])
     assert len([m for m in chat if not m["me"]]) == 2
+
+
+@needs_groq
+def test_voice_receptionist():
+    at = page("voice")
+    for msg in ["Hi, I'd like to book a check-up next Tuesday, what times do you have?",
+                "The earliest one please. My name is Sam Lee and my number is 555 0100."]:
+        at.chat_input[0].set_value(msg).run()
+        assert not at.exception, at.exception
+    v = at.session_state["voice"]
+    print("\n===== voice =====")
+    for role, text in v["transcript"]:
+        print(f"{role.upper():9} {text}")
+    for w in v["webhooks"]:
+        print("WEBHOOK", w)
+    print("AUDIO bytes:", len(v["audio"] or b""))
+    click(at, "Hang up")
+    print("CALLS:", v["server"].get("/calls").json())
+    assert any(w[0] == "check_availability" for w in v["webhooks"])
