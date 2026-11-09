@@ -157,3 +157,21 @@ def test_meeting_notes():
     tasks, recap = at.session_state["meeting_result"]
     print(recap["slack_text"])
     assert len(tasks) >= 3 and "Action items" in recap["slack_text"]
+
+
+def test_multitenant_isolation():
+    at = page("multitenant_rag")
+    click(at, "Run the isolation checks")
+    rows = at.table[0].value
+    print("\n===== multi-tenant isolation =====\n", rows.to_string())
+    assert not rows["Result"].str.contains("allowed").any()
+    assert rows["Result"].iloc[0] == "0 rows visible"
+
+
+@needs_groq
+def test_multitenant_ask():
+    at = page("multitenant_rag")
+    at.text_input[0].set_value("How many days of paid leave do staff get?")
+    click(at, "Ask")
+    out = report("multi-tenant ask", at)
+    assert "24" in out
