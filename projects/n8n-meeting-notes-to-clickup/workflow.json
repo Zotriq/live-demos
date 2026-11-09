@@ -1,0 +1,545 @@
+{
+  "name": "Meeting Notes \u2192 ClickUp Tasks + Slack Recap",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "meeting-notes",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "c2000000-0000-4000-8000-000000000001",
+      "name": "Meeting Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        300
+      ],
+      "webhookId": "c2000000-0000-4000-8000-000000000101"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Validate the webhook body and normalise it.\n// Accepts: { title, date?, attendees: [{ name, email? } | \"Name\"], transcript? , audio_url?, clickup_list_id? }\nconst body = $input.first().json.body || $input.first().json;\nconst str = (v) => (typeof v === 'string' ? v.trim() : '');\n\nconst attendees = (Array.isArray(body.attendees) ? body.attendees : [])\n  .map((a) => (typeof a === 'string' ? { name: a.trim() } : { name: str(a.name), email: str(a.email).toLowerCase() }))\n  .filter((a) => a.name);\n\nconst meeting = {\n  title: str(body.title) || 'Untitled meeting',\n  date: /^\\d{4}-\\d{2}-\\d{2}$/.test(str(body.date)) ? str(body.date) : $now.toISODate(),\n  attendees,\n  transcript: str(body.transcript),\n  audio_url: str(body.audio_url),\n  clickup_list_id: str(body.clickup_list_id),\n};\n\nconst errors = [];\nif (!meeting.transcript && !/^https:\\/\\//.test(meeting.audio_url)) errors.push('send a transcript or an https audio_url');\nif (meeting.transcript && meeting.transcript.length < 50) errors.push('transcript is too short');\nif (attendees.length === 0) errors.push('attendees are required so tasks can be assigned');\nif (errors.length) throw new Error('Invalid meeting payload: ' + errors.join('; '));\n\nreturn [{ json: meeting }];\n"
+      },
+      "id": "c2000000-0000-4000-8000-000000000002",
+      "name": "Validate Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ accepted: true, meeting: $json.title }) }}",
+        "options": {
+          "responseCode": 202
+        }
+      },
+      "id": "c2000000-0000-4000-8000-000000000003",
+      "name": "Respond 202",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "c2000000-0000-4000-8000-000000000201",
+              "leftValue": "={{ $json.transcript }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "c2000000-0000-4000-8000-000000000004",
+      "name": "Has Transcript?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        660,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.audio_url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "id": "c2000000-0000-4000-8000-000000000005",
+      "name": "Download Recording",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/audio/transcriptions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "model",
+              "value": "whisper-1"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "id": "c2000000-0000-4000-8000-000000000006",
+      "name": "Whisper: Transcribe",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1100,
+        460
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "OpenAI (placeholder)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Whisper returns { text }. Merge it back into the validated meeting.\nconst meeting = $('Validate Input').first().json;\nconst text = ($input.first().json.text || '').trim();\nif (!text) throw new Error('Transcription returned no text');\nreturn [{ json: { ...meeting, transcript: text } }];\n"
+      },
+      "id": "c2000000-0000-4000-8000-000000000007",
+      "name": "Attach Transcript",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1320,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'gpt-4o-mini', temperature: 0, response_format: { type: 'json_schema', json_schema: { name: 'meeting_notes', strict: true, schema: {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"summary\", \"decisions\", \"action_items\", \"risks\"], \"properties\": {\"summary\": {\"type\": \"string\", \"description\": \"3-5 sentence plain-English summary\"}, \"decisions\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}, \"action_items\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"task\", \"owner\", \"due_date\", \"priority\"], \"properties\": {\"task\": {\"type\": \"string\", \"description\": \"Imperative, specific, under 100 characters\"}, \"owner\": {\"type\": [\"string\", \"null\"], \"description\": \"Attendee name exactly as given, or null\"}, \"due_date\": {\"type\": [\"string\", \"null\"], \"description\": \"YYYY-MM-DD if a deadline was stated, else null\"}, \"priority\": {\"type\": \"string\", \"enum\": [\"urgent\", \"high\", \"normal\", \"low\"]}}}}, \"risks\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}}} } }, messages: [ { role: 'system', content: \"You turn meeting transcripts into structured notes. Only include action items someone actually agreed to do. Never invent owners or deadlines: use null when the transcript doesn't say. Resolve relative dates (\\\"by Friday\\\") against the meeting date. Owners must be one of the attendees.\" }, { role: 'user', content: 'Meeting: ' + $json.title + '\\nDate: ' + $json.date + '\\nAttendees: ' + $json.attendees.map(a => a.name).join(', ') + '\\n\\nTranscript:\\n' + $json.transcript } ] }) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "c2000000-0000-4000-8000-000000000008",
+      "name": "OpenAI: Summarize & Extract",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1540,
+        300
+      ],
+      "onError": "continueErrorOutput",
+      "credentials": {
+        "openAiApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "OpenAI (placeholder)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse GPT's JSON, then turn each action item into a ClickUp task payload.\n// ---- Configure for your workspace ----\nconst DEFAULT_LIST_ID = 'REPLACE_WITH_CLICKUP_LIST_ID';\n// Attendee name (lower case) -> ClickUp user id. Find ids via GET /api/v2/team.\nconst TEAM = {\n  'sara malik': 81234567,\n  'omar farooq': 81234568,\n  'liam smith': 81234569,\n};\n// --------------------------------------\n\nconst meeting = $('Validate Input').first().json;\nconst raw = $input.first().json.choices?.[0]?.message?.content;\nlet notes;\ntry {\n  notes = JSON.parse(raw);\n} catch (e) {\n  throw new Error('Model did not return valid JSON: ' + String(raw).slice(0, 200));\n}\nfor (const key of ['summary', 'decisions', 'action_items', 'risks']) {\n  if (!(key in notes)) throw new Error('Model JSON is missing \"' + key + '\"');\n}\n\nconst PRIORITY = { urgent: 1, high: 2, normal: 3, low: 4 };\n\n// Match an owner to the team by full name, then by unique first name.\nfunction clickupUser(owner) {\n  if (!owner) return null;\n  const name = owner.trim().toLowerCase();\n  if (TEAM[name]) return TEAM[name];\n  const first = name.split(/\\s+/)[0];\n  const matches = Object.keys(TEAM).filter((k) => k.split(/\\s+/)[0] === first);\n  return matches.length === 1 ? TEAM[matches[0]] : null;\n}\n\nfunction dueMs(date) {\n  if (!date || !/^\\d{4}-\\d{2}-\\d{2}$/.test(date)) return null;\n  return Date.parse(date + 'T17:00:00Z');\n}\n\nconst listId = meeting.clickup_list_id || DEFAULT_LIST_ID;\nconst items = notes.action_items\n  .filter((a) => a && typeof a.task === 'string' && a.task.trim())\n  .map((a) => {\n    const assignee = clickupUser(a.owner);\n    const due = dueMs(a.due_date);\n    const task = {\n      name: a.task.trim().slice(0, 200),\n      description: 'From meeting \"' + meeting.title + '\" on ' + meeting.date + '.\\n\\n' +\n        'Owner mentioned: ' + (a.owner || 'not assigned in the meeting') + '\\n\\nMeeting summary:\\n' + notes.summary,\n      priority: PRIORITY[a.priority] || 3,\n      assignees: assignee ? [assignee] : [],\n      tags: ['meeting-action'],\n    };\n    if (due) {\n      task.due_date = due;\n      task.due_date_time = false;\n    }\n    return { json: { list_id: listId, clickup_task: task, owner: a.owner || null, assigned: Boolean(assignee), notes } };\n  });\n\nif (items.length === 0) return [{ json: { skip: true, notes } }];\nreturn items;\n"
+      },
+      "id": "c2000000-0000-4000-8000-000000000009",
+      "name": "Parse & Map Owners",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1760,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "c2000000-0000-4000-8000-000000000202",
+              "leftValue": "={{ $json.skip === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "c2000000-0000-4000-8000-000000000017",
+      "name": "Any Action Items?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1980,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.clickup.com/api/v2/list/{{ $json.list_id }}/task",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.clickup_task) }}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 5,
+              "batchInterval": 1000
+            }
+          }
+        }
+      },
+      "id": "c2000000-0000-4000-8000-000000000010",
+      "name": "ClickUp: Create Task",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2200,
+        220
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "ClickUp token (placeholder)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build the Slack recap from the notes and the tasks ClickUp created.\nconst parsed = $('Parse & Map Owners').all().map((i) => i.json);\nconst notes = parsed[0].notes;\nconst meeting = $('Validate Input').first().json;\nconst created = $input.all().map((i) => i.json).filter((t) => t && t.id && t.url);\n\nconst lines = [];\nlines.push('*:memo: ' + meeting.title + '* (' + meeting.date + ')');\nlines.push(notes.summary);\n\nif (notes.decisions.length) {\n  lines.push('', '*Decisions*');\n  notes.decisions.forEach((d) => lines.push('\u2022 ' + d));\n}\n\nconst tasks = parsed.filter((p) => !p.skip);\nif (tasks.length) {\n  lines.push('', '*Action items*');\n  tasks.forEach((p, i) => {\n    const link = created[i] ? '<' + created[i].url + '|' + p.clickup_task.name + '>' : p.clickup_task.name;\n    const who = p.owner ? (p.assigned ? p.owner : p.owner + ' :warning: not in ClickUp') : ':warning: no owner';\n    const due = p.clickup_task.due_date ? ' \u00b7 due ' + new Date(p.clickup_task.due_date).toISOString().slice(0, 10) : '';\n    lines.push('\u2022 ' + link + ' (' + who + due + ')');\n  });\n} else {\n  lines.push('', '_No action items were agreed._');\n}\n\nif (notes.risks.length) {\n  lines.push('', '*Risks / open questions*');\n  notes.risks.forEach((r) => lines.push('\u2022 ' + r));\n}\n\nreturn [{ json: { slack_text: lines.join('\\n'), tasks_created: created.length } }];\n"
+      },
+      "id": "c2000000-0000-4000-8000-000000000011",
+      "name": "Build Recap",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2420,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "#meeting-notes"
+        },
+        "text": "={{ $json.slack_text }}",
+        "otherOptions": {}
+      },
+      "id": "c2000000-0000-4000-8000-000000000012",
+      "name": "Slack: Post Recap",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        2640,
+        300
+      ],
+      "webhookId": "c2000000-0000-4000-8000-000000000102",
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "Slack (placeholder)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "#automation-alerts"
+        },
+        "text": "=:rotating_light: Meeting notes failed for *{{ $('Validate Input').first().json.title }}* (execution {{ $execution.id }}).\nError: {{ $json.error?.message || 'see execution log' }}",
+        "otherOptions": {}
+      },
+      "id": "c2000000-0000-4000-8000-000000000013",
+      "name": "Slack: Failure Alert",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        1760,
+        520
+      ],
+      "webhookId": "c2000000-0000-4000-8000-000000000103",
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "Slack (placeholder)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 1. Intake\nPOST a transcript (Zoom, Fireflies, Otter, Teams) **or** an `audio_url`.\nReturns 202 right away; the rest runs in the background.",
+        "height": 220,
+        "width": 680
+      },
+      "id": "c2000000-0000-4000-8000-000000000014",
+      "name": "Note: Intake",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 2. Understand\nNo transcript? Download the recording and transcribe it with Whisper.\nThen GPT returns **strict JSON**: summary, decisions, action items, risks.",
+        "height": 220,
+        "width": 760
+      },
+      "id": "c2000000-0000-4000-8000-000000000015",
+      "name": "Note: AI",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        840,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 3. Act\nOwners are mapped to ClickUp users, tasks are created (with retries),\nand a recap with task links goes to Slack.",
+        "height": 220,
+        "width": 1100
+      },
+      "id": "c2000000-0000-4000-8000-000000000016",
+      "name": "Note: Act",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1740,
+        40
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Meeting Webhook": {
+      "main": [
+        [
+          {
+            "node": "Validate Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Input": {
+      "main": [
+        [
+          {
+            "node": "Respond 202",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond 202": {
+      "main": [
+        [
+          {
+            "node": "Has Transcript?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Transcript?": {
+      "main": [
+        [
+          {
+            "node": "OpenAI: Summarize & Extract",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Download Recording",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Recording": {
+      "main": [
+        [
+          {
+            "node": "Whisper: Transcribe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Whisper: Transcribe": {
+      "main": [
+        [
+          {
+            "node": "Attach Transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Attach Transcript": {
+      "main": [
+        [
+          {
+            "node": "OpenAI: Summarize & Extract",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI: Summarize & Extract": {
+      "main": [
+        [
+          {
+            "node": "Parse & Map Owners",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Slack: Failure Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse & Map Owners": {
+      "main": [
+        [
+          {
+            "node": "Any Action Items?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Any Action Items?": {
+      "main": [
+        [
+          {
+            "node": "ClickUp: Create Task",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build Recap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ClickUp: Create Task": {
+      "main": [
+        [
+          {
+            "node": "Build Recap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Recap": {
+      "main": [
+        [
+          {
+            "node": "Slack: Post Recap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [],
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

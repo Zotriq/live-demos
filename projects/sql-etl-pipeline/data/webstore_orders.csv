@@ -1,0 +1,9 @@
+order_id,customer_email,customer_name,order_date,total,currency,status,country
+W-1001, Ayesha@Example.com ,Ayesha Khan,2026-04-01,"$1,249.50",USD,paid,PK
+W-1002,liam@example.com,Liam Smith,04/18/2026,89.00,GBP,Paid,United Kingdom
+W-1003,sofia@example.com,Sofia Rossi,2026-06-02,39.50,EUR,refunded,Italy
+W-1003,sofia@example.com,Sofia Rossi,2026-06-02,39.50,EUR,refunded,Italy
+W-1004,,Unknown Buyer,2026-06-05,20.00,USD,paid,US
+W-1005,omar@example.com,Omar Farooq,2026-13-40,75.00,USD,paid,Pakistan
+W-1006,emma@example.com,Emma Brown,2026-07-09,-15.00,USD,paid,USA
+W-1007,emma@example.com,Emma Brown,2026-07-10,310.00,usd,shipped,usa

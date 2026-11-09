@@ -1,0 +1,8 @@
+streamlit==1.66.0
+psycopg[binary]==3.3.8
+postgresql-binaries==18.6.0
+pixeltable-pgserver==0.7.2
+scikit-learn==1.9.1
+pandas
+numpy
+joblib

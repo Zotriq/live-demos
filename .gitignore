@@ -1,4 +1,3 @@
 __pycache__/
 *.pyc
-spaces/*/project
-spaces/*/shared
+.streamlit/secrets.toml

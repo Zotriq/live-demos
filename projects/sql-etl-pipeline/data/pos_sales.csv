@@ -1,0 +1,5 @@
+Receipt No;Email;Customer;Sale Date;Amount;Cur;Outlet
+P-77;ayesha@example.com;Ayesha Khan;12.05.2026;18.990,00;PKR;Lahore
+P-78;bilal@example.com;Bilal Ahmed;13.05.2026;4.500,50;PKR;Karachi
+P-79;bilal@example.com;Bilal Ahmed;;1.200,00;PKR;Karachi
+P-80;not-an-email;Walk-in;14.05.2026;999,00;PKR;Lahore

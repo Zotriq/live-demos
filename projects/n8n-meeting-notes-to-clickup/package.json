@@ -1,0 +1,9 @@
+{
+  "name": "n8n-meeting-notes-to-clickup",
+  "version": "0.1.0",
+  "private": true,
+  "description": "n8n workflow: meeting transcript or recording to AI summary, ClickUp tasks and a Slack recap",
+  "scripts": { "test": "node --test tests/*.test.mjs" },
+  "license": "MIT",
+  "author": "Zohaib Tariq"
+}

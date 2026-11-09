@@ -1,0 +1,17 @@
+{
+  "name": "Glow Salon & Spa",
+  "timezone": "Asia/Karachi",
+  "address": "12-B Main Boulevard, Gulberg III, Lahore",
+  "hours": {"mon": ["11:00", "20:00"], "tue": ["11:00", "20:00"], "wed": ["11:00", "20:00"], "thu": ["11:00", "20:00"],
+            "fri": ["11:00", "20:00"], "sat": ["10:00", "21:00"], "sun": null},
+  "slot_minutes": 30,
+  "chairs": 2,
+  "services": {
+    "haircut":   {"label": "Haircut & blow-dry", "minutes": 60, "price": "Rs 3,500"},
+    "color":     {"label": "Hair colour",        "minutes": 120, "price": "from Rs 9,000"},
+    "facial":    {"label": "Hydrating facial",   "minutes": 60, "price": "Rs 6,500"},
+    "manicure":  {"label": "Manicure",           "minutes": 45, "price": "Rs 2,500"},
+    "bridal":    {"label": "Bridal consultation", "minutes": 30, "price": "free"}
+  },
+  "faq": "Payment by cash, card or bank transfer. Please arrive 10 minutes early. Cancellations need 4 hours' notice. Parking is available in front of the salon."
+}

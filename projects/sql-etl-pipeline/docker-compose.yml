@@ -1,0 +1,25 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: etl
+      POSTGRES_PASSWORD: etl
+      POSTGRES_DB: etl
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "etl"]
+      interval: 5s
+      retries: 10
+
+  etl:
+    build: .
+    environment:
+      DATABASE_URL: postgresql+psycopg://etl:etl@db:5432/etl
+      DATA_DIR: /app/data
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:

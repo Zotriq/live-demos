@@ -1,0 +1,10 @@
+{
+  "title": "Q4 launch sync",
+  "date": "2026-11-09",
+  "attendees": [
+    {"name": "Sara Malik", "email": "sara@brightlane.co"},
+    {"name": "Omar Farooq", "email": "omar@brightlane.co"},
+    "Liam Smith"
+  ],
+  "transcript": "Sara: Let's lock the launch date. Are we still good for December 1st? Omar: Yes, but the pricing page isn't done. I can finish it by Friday. Sara: Great. Liam, can you send the beta users the migration guide this week? Liam: Sure, I'll send it by Wednesday. Sara: We also agreed to drop the annual discount for now. One risk: the payment provider hasn't approved our account yet. Someone should chase them. Omar: I'll ping them today, it's urgent."
+}
