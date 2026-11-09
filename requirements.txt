@@ -26,3 +26,4 @@ pgvector>=0.3
 pypdf>=4.0
 python-multipart>=0.0.9
 fastembed>=0.5
+pyyaml>=6

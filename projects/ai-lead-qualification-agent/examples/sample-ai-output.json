@@ -1,0 +1,97 @@
+{
+  "lead_id": "lead_2026051409224500_jane_smith",
+  "analyzed_at": "2026-05-14T09:22:52Z",
+  "model": "gpt-4o",
+  "processing_time_ms": 1847,
+
+  "qualification": {
+    "score": 87,
+    "tier": "hot",
+    "recommendation": "schedule_call",
+    "priority": "high",
+    "confidence": 0.92
+  },
+
+  "bant": {
+    "budget": {
+      "score": 85,
+      "rating": "strong",
+      "notes": "Stated budget of $1,000–$5,000/month is well-aligned with mid-tier SaaS pricing. VP-level contact likely has authority to approve spend in this range without extended procurement cycles."
+    },
+    "authority": {
+      "score": 90,
+      "rating": "strong",
+      "notes": "VP of Engineering is a senior decision-maker or key influencer for technical tooling purchases. Likely has direct budget authority or close access to the economic buyer."
+    },
+    "need": {
+      "score": 95,
+      "rating": "strong",
+      "notes": "Clear, specific pain point articulated: manual lead processing not scaling at 500 leads/month. Active evaluation in progress. Named integration requirements (HubSpot, Slack) indicate a defined problem statement."
+    },
+    "timeline": {
+      "score": 90,
+      "rating": "strong",
+      "notes": "Stated timeline of 'within 30 days' signals urgency and an active buying cycle. Not a speculative or exploratory inquiry."
+    }
+  },
+
+  "firmographics": {
+    "company_size_band": "51-200",
+    "industry_fit": "high",
+    "industry_notes": "Software/SaaS companies are core ICP. High likelihood of technical sophistication and integration-readiness.",
+    "geography": "US / California",
+    "estimated_arr_potential": "$12,000 - $60,000"
+  },
+
+  "intent_signals": [
+    "Explicit mention of evaluation process",
+    "Quantified current lead volume (500/month)",
+    "Named specific integrations required (HubSpot, Slack)",
+    "Defined budget range provided",
+    "Short purchase timeline stated",
+    "Senior decision-maker title"
+  ],
+
+  "risk_flags": [
+    "Single contact — no mention of broader buying committee",
+    "Integration requirements (HubSpot + Slack) should be confirmed as supported before call"
+  ],
+
+  "suggested_actions": [
+    {
+      "action": "schedule_discovery_call",
+      "priority": 1,
+      "notes": "Book a 30-minute discovery call within 24 hours. Confirm HubSpot and Slack integration capabilities in advance."
+    },
+    {
+      "action": "send_personalized_email",
+      "priority": 2,
+      "notes": "Send a tailored follow-up email referencing the scaling pain point and their 500 leads/month volume. Include a link to the HubSpot integration docs."
+    },
+    {
+      "action": "assign_to_ae",
+      "priority": 3,
+      "notes": "Assign to a senior Account Executive given the VP-level contact and strong BANT score."
+    }
+  ],
+
+  "personalization_hooks": [
+    "Reference the 500 leads/month scaling challenge directly",
+    "Highlight native HubSpot and Slack integrations",
+    "Mention similar SaaS customers in the 51-200 employee range",
+    "Acknowledge the 30-day evaluation timeline and propose a fast-track onboarding path"
+  ],
+
+  "email_draft": {
+    "subject": "Automating your 500 leads/month — quick 30-min call?",
+    "body": "Hi Jane,\n\nThanks for reaching out. Scaling a 500-lead/month pipeline manually is a real bottleneck — and it only gets harder as you grow.\n\nWe work with a number of SaaS engineering teams at your stage who've used our platform to cut manual triage time by 80%+, with native integrations for both HubSpot and Slack already built in.\n\nGiven your 30-day timeline, I'd love to show you a quick demo and confirm this is the right fit. Are you free for 30 minutes this week or early next?\n\nBest,\n[Your Name]"
+  },
+
+  "raw_scores": {
+    "budget_weight": 0.25,
+    "authority_weight": 0.25,
+    "need_weight": 0.30,
+    "timeline_weight": 0.20,
+    "weighted_score": 87.25
+  }
+}

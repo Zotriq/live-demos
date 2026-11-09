@@ -17,9 +17,9 @@ ROOT = Path(__file__).parent / "projects"
 REPOS = [
     "ai-phishing-detector", "postgres-performance-tuning", "sql-etl-pipeline", "postgres-mcp-server",
     "invoice-extraction-pipeline", "langgraph-support-agents", "voice-ai-receptionist", "whatsapp-ai-agent",
-    "stripe-crm-automation", "multitenant-rag-saas", "n8n-meeting-notes-to-clickup",
+    "stripe-crm-automation", "multitenant-rag-saas", "n8n-meeting-notes-to-clickup", "ai-lead-qualification-agent",
 ]
-SKIP = {".git", ".github", "tests", "node_modules", "__pycache__", "docs", "datasets", ".gitignore", "LICENSE"}
+SKIP = {".git", ".github", "tests", "node_modules", "__pycache__", "docs", "datasets", ".gitignore", "LICENSE", "frontend"}
 
 for repo in sys.argv[1:] or REPOS:
     with tempfile.TemporaryDirectory() as tmp:

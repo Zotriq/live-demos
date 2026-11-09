@@ -1,0 +1,36 @@
+{
+  "source": "n8n",
+  "workflow_id": "wf_lead_capture_typeform",
+  "workflow_name": "Typeform → Lead Qualification Pipeline",
+  "execution_id": "exec_20260514_112233_abc9",
+  "triggered_at": "2026-05-14T11:22:33Z",
+  "lead": {
+    "first_name": "Priya",
+    "last_name": "Nair",
+    "email": "priya.nair@growthstartup.co",
+    "phone": "+44-20-7946-0815",
+    "company": "GrowthStartup Co.",
+    "job_title": "Head of Growth",
+    "company_size": "11-50",
+    "industry": "E-commerce",
+    "website": "https://growthstartup.co",
+    "country": "GB",
+    "message": "We are a fast-growing D2C brand and need to qualify inbound partnership requests faster. Currently spending 3+ hours per day on manual outreach triage. Budget approved, looking to move quickly.",
+    "budget": "$500 - $1,000 / month",
+    "timeline": "ASAP — within 2 weeks"
+  },
+  "form_metadata": {
+    "form_id": "typeform_abc123",
+    "form_name": "Partnership Inquiry Form",
+    "response_id": "resp_xyz789",
+    "submitted_at": "2026-05-14T11:21:58Z",
+    "completion_time_seconds": 142,
+    "referrer": "https://www.linkedin.com/"
+  },
+  "enrichment": {
+    "ip_address": "81.142.55.201",
+    "ip_country": "GB",
+    "ip_city": "London",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+  }
+}

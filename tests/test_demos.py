@@ -175,3 +175,13 @@ def test_multitenant_ask():
     click(at, "Ask")
     out = report("multi-tenant ask", at)
     assert "24" in out
+
+
+@needs_groq
+def test_lead_qualifier():
+    at = page("lead_qualifier")
+    click(at, "Qualify this lead")
+    lead, rules, ai, email = at.session_state["lead_result"]
+    print("\n===== lead qualifier =====\n", rules["score"], ai["ai_score"], ai["final_score"], ai.get("qualification_status"),
+          ai.get("ai_available"), "\n", email["subject"], "\n", email["body"][:400])
+    assert ai["ai_available"]

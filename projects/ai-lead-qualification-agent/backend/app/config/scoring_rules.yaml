@@ -1,0 +1,128 @@
+thresholds:
+  hot: 75
+  warm: 50
+  cold: 25
+
+budget:
+  high_value_min: 5000
+  medium_value_min: 1000
+
+timeline_scores:
+  asap: 20
+  this_month: 20
+  next_month: 10
+  this_quarter: 5
+  next_quarter: 2
+  unknown: 0
+
+company_size_scores:
+  enterprise: 15  # 500+
+  large: 12       # 200-499
+  medium: 10      # 50-199
+  small: 5        # 10-49
+  micro: 2        # 1-9
+
+decision_maker_titles:
+  - CEO
+  - Founder
+  - Co-Founder
+  - CTO
+  - COO
+  - CFO
+  - VP
+  - Vice President
+  - Director
+  - Head of
+  - Manager
+  - Owner
+  - Partner
+  - President
+  - Chief
+
+decision_maker_score: 15
+
+target_industries:
+  - saas
+  - technology
+  - fintech
+  - healthcare
+  - ecommerce
+  - e-commerce
+  - artificial intelligence
+  - ai
+  - automation
+  - consulting
+  - professional services
+  - real estate
+  - finance
+  - insurance
+  - logistics
+
+industry_match_score: 10
+
+target_countries:
+  - united states
+  - united kingdom
+  - canada
+  - australia
+  - germany
+  - france
+  - netherlands
+  - singapore
+  - uae
+  - saudi arabia
+
+country_match_score: 5
+
+intent_keywords:
+  - need
+  - looking for
+  - want to
+  - interested in
+  - help us
+  - automate
+  - improve
+  - solution
+  - integrate
+  - build
+  - develop
+  - implement
+  - urgent
+  - asap
+  - immediately
+  - ready to start
+
+intent_score: 20
+
+spam_keywords:
+  - free money
+  - click here
+  - act now
+  - limited time
+  - congratulations
+  - you won
+  - nigerian prince
+  - crypto opportunity
+  - guaranteed income
+  - make money fast
+
+spam_penalty: -50
+
+completeness_fields:
+  - name
+  - email
+  - company
+  - phone
+  - budget
+  - timeline
+  - message
+  - job_title
+  - industry
+
+completeness_max_score: 10
+
+missing_critical_penalties:
+  email: -20
+  name: -15
+  message: -10
+  company: -5
