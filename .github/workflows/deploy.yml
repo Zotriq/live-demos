@@ -31,6 +31,8 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "names=${{ github.event.inputs.spaces }}" >> "$GITHUB_OUTPUT"
+          elif ! git rev-parse -q --verify HEAD~1 >/dev/null; then
+            echo "names=" >> "$GITHUB_OUTPUT"
           elif git diff --name-only HEAD~1 HEAD | grep -qE '^(shared/|deploy.py)'; then
             echo "names=" >> "$GITHUB_OUTPUT"
           else
