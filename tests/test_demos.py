@@ -148,3 +148,12 @@ def test_stripe():
     assert [r["response"][:3] for r in s["log"]] == ["200", "200", "400"]
     assert "'duplicate': True" in s["log"][1]["response"]
     assert len(s["calls"]) == 2 and len(s["emails"]) == 1
+
+
+@needs_groq
+def test_meeting_notes():
+    at = click(page("meeting_notes"), "Run the workflow")
+    out = report("meeting notes", at)
+    tasks, recap = at.session_state["meeting_result"]
+    print(recap["slack_text"])
+    assert len(tasks) >= 3 and "Action items" in recap["slack_text"]
