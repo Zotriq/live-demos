@@ -17,6 +17,7 @@ DEMOS = [
     ("demos/multitenant_rag.py", "Multi-tenant RAG SaaS", "multitenant-rag", ":material/domain:", "RAG"),
     ("demos/lead_qualifier.py", "AI Lead Qualification Agent", "lead-qualifier", ":material/leaderboard:", "AI agents"),
     ("demos/vehicle_analysis.py", "AI Vehicle Analysis", "vehicle-analysis", ":material/local_shipping:", "AI agents"),
+    ("demos/specforge.py", "SpecForge (MCP)", "specforge", ":material/description:", "AI agents"),
     ("demos/research_agent.py", "ReAct Research Agent", "research-agent", ":material/travel_explore:", "AI agents"),
     ("demos/phishing.py", "AI Phishing Detector", "phishing-detector", ":material/shield:", "Machine learning"),
 ]

@@ -250,3 +250,14 @@ def test_vehicle_analysis():
     res = at.session_state["vehicle_result"]
     print("\n===== vehicle analysis =====\n", res["vehicle_id"], res["analysis"][:600])
     assert res["vehicle_id"] == 55 and "coolant" in res["analysis"].lower()
+
+
+@needs_groq
+def test_specforge():
+    at = page("specforge")
+    at.text_area[0].set_value("I wanna build a wishlist for our shop's storefront: shoppers save products, "
+                              "stored in Postgres, Django + React app")
+    click(at, "Forge spec")
+    res = at.session_state["sf_result"]
+    print("\n===== specforge =====\n", res["status"], res.get("questions"), (res.get("spec") or res.get("error") or "")[:500])
+    assert res["status"] in ("done", "gathering")

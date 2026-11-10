@@ -45,3 +45,5 @@ python-docx>=1.1
 python-pptx>=1.0
 xlrd>=2.0
 beautifulsoup4>=4.12
+fastmcp>=2.0
+rich>=13.7
