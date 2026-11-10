@@ -1,0 +1,7 @@
+Context excerpts:
+{context}
+
+Question: {question}
+
+Answer using only the context above. Cite sources as [source_file, p.N].
+If the context is insufficient, say so directly instead of guessing.

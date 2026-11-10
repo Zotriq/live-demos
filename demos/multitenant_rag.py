@@ -5,12 +5,12 @@ import streamlit as st
 from fastapi.testclient import TestClient
 from openai import OpenAI
 
-from lib import llm, pg, ui
+from lib import embed, llm, pg, ui
 
 repo = ui.project_path("multitenant-rag-saas")
 from rag_saas.api import create_app  # noqa: E402
 from rag_saas.db import Store, create_tenant  # noqa: E402
-from rag_saas.providers import ANSWER_PROMPT, HashingEmbedder  # noqa: E402
+from rag_saas.providers import ANSWER_PROMPT  # noqa: E402
 
 TENANTS = {
     "Acme Clinics": [
@@ -33,20 +33,11 @@ TENANTS = {
 
 
 class Embedder:
-    """Local open-source embeddings (bge-small via fastembed); no API needed."""
-    dim = 384
-
-    def __init__(self):
-        try:
-            from fastembed import TextEmbedding
-            self.model = TextEmbedding("BAAI/bge-small-en-v1.5")
-        except Exception:  # model download blocked: fall back to the project's offline embedder
-            self.model, self.dim = None, 384
+    """Local open-source embeddings shared by the RAG demos (lib/embed.py)."""
+    dim = embed.DIM
 
     def embed(self, texts: list[str]) -> list[list[float]]:
-        if self.model is None:
-            return HashingEmbedder(self.dim).embed(texts)
-        return [v.tolist() for v in self.model.embed(texts)]
+        return embed.embed(texts)
 
 
 class GroqGenerator:

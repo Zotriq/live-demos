@@ -194,3 +194,14 @@ def test_research_agent():
     click(at, "Research")
     print("\n===== research agent =====\n", at.session_state["research_answer"])
     assert at.session_state["research_answer"]
+
+
+@needs_groq
+def test_pdf_rag():
+    at = page("pdf_rag")
+    click(at, "Use the sample")
+    at.text_input[0].set_value("How many days can I work from home?")
+    click(at, "Ask")
+    answer, chunks = at.session_state["pdf_answer"]
+    print("\n===== pdf rag =====\n", answer, "\n", [(c.source_file, c.page_number, round(c.score, 2)) for c in chunks])
+    assert "three" in answer.lower() or "3" in answer

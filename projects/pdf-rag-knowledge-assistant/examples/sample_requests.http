@@ -1,0 +1,15 @@
+### Health check
+GET http://localhost:8000/health
+
+### Upload a PDF (use your HTTP client's multipart/form-data file picker)
+POST http://localhost:8000/documents/upload
+Content-Type: multipart/form-data
+
+### Ask a question
+POST http://localhost:8000/chat/ask
+Content-Type: application/json
+
+{
+  "question": "What is the refund policy?",
+  "top_k": 5
+}

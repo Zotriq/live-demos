@@ -31,3 +31,11 @@ langchain-groq
 ddgs>=9
 pymupdf
 requests
+langchain-postgres>=0.0.15
+langchain-core>=0.3
+pydantic-settings>=2
+structlog
+tenacity
+anthropic
+langchain-openai
+langchain-text-splitters
