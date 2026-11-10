@@ -1,0 +1,18 @@
+[theme]
+base = "light"
+primaryColor = "#3b4fd8"
+backgroundColor = "#f7f8fc"
+secondaryBackgroundColor = "#eceffa"
+textColor = "#151a33"
+font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap, sans-serif"
+headingFont = "'Space Grotesk':https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap, sans-serif"
+headingFontWeights = [700, 600, 600]
+baseRadius = "medium"
+showSidebarBorder = true
+
+[theme.sidebar]
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#eef0fd"
+
+[client]
+toolbarMode = "minimal"

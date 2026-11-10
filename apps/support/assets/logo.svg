@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="72" viewBox="0 0 260 72">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b4fd8"/><stop offset="1" stop-color="#6a7cf0"/></linearGradient></defs>
+  <rect x="2" y="6" width="60" height="60" rx="16" fill="url(#g)"/>
+  <path d="M16 26l16 11 16-11M16 26h32v22H16z" fill="none" stroke="#fff" stroke-width="4.5" stroke-linejoin="round"/>
+  <circle cx="49" cy="22" r="7" fill="#ffb547" stroke="#fff" stroke-width="3"/>
+  <text x="76" y="47" font-family="Helvetica, Arial, sans-serif" font-size="32" font-weight="700" fill="#151a33">Relay</text>
+</svg>

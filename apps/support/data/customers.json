@@ -1,0 +1,383 @@
+{
+ "customers": [
+  {
+   "email": "sara@brightlane.co",
+   "name": "Sara Malik",
+   "company": "Brightlane",
+   "plan": "Pro",
+   "seats": 12,
+   "status": "active",
+   "renews_on": "2026-12-01",
+   "since": "2023-06",
+   "mrr": 588.0,
+   "invoices": [
+    {
+     "number": "INV-3104",
+     "date": "2026-09-01",
+     "amount": 588.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3111",
+     "date": "2026-10-01",
+     "amount": 588.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3118",
+     "date": "2026-11-01",
+     "amount": 588.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3389",
+     "date": "2026-11-01",
+     "amount": 588.0,
+     "status": "paid",
+     "note": "duplicate charge, created by a billing retry"
+    }
+   ]
+  },
+  {
+   "email": "tom@harbortech.io",
+   "name": "Tom Reyes",
+   "company": "Harbor Tech",
+   "plan": "Starter",
+   "seats": 3,
+   "status": "active",
+   "renews_on": "2027-02-14",
+   "since": "2022-10",
+   "mrr": 48.0,
+   "invoices": [
+    {
+     "number": "INV-3125",
+     "date": "2026-09-01",
+     "amount": 48.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3131",
+     "date": "2026-10-01",
+     "amount": 48.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3139",
+     "date": "2026-11-01",
+     "amount": 48.0,
+     "status": "paid"
+    }
+   ]
+  },
+  {
+   "email": "lena@kestrelhealth.com",
+   "name": "Lena Fischer",
+   "company": "Kestrel Health",
+   "plan": "Enterprise",
+   "seats": 85,
+   "status": "active",
+   "renews_on": "2027-06-30",
+   "since": "2024-09",
+   "mrr": 3315.0,
+   "invoices": [
+    {
+     "number": "INV-3142",
+     "date": "2026-09-01",
+     "amount": 3315.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3151",
+     "date": "2026-10-01",
+     "amount": 3315.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3157",
+     "date": "2026-11-01",
+     "amount": 3315.0,
+     "status": "paid"
+    }
+   ]
+  },
+  {
+   "email": "marcus@tidewaterco.com",
+   "name": "Marcus Bell",
+   "company": "Tidewater & Co",
+   "plan": "Pro",
+   "seats": 24,
+   "status": "active",
+   "renews_on": "2027-01-09",
+   "since": "2025-09",
+   "mrr": 1176.0,
+   "invoices": [
+    {
+     "number": "INV-3161",
+     "date": "2026-09-01",
+     "amount": 1176.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3165",
+     "date": "2026-10-01",
+     "amount": 1176.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3173",
+     "date": "2026-11-01",
+     "amount": 1176.0,
+     "status": "paid"
+    }
+   ]
+  },
+  {
+   "email": "aisha@orbitpay.io",
+   "name": "Aisha Rahman",
+   "company": "OrbitPay",
+   "plan": "Pro",
+   "seats": 18,
+   "status": "past_due",
+   "renews_on": "2026-11-28",
+   "since": "2025-11",
+   "mrr": 882.0,
+   "invoices": [
+    {
+     "number": "INV-3182",
+     "date": "2026-09-01",
+     "amount": 882.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3189",
+     "date": "2026-10-01",
+     "amount": 882.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3195",
+     "date": "2026-11-01",
+     "amount": 882.0,
+     "status": "failed"
+    }
+   ]
+  },
+  {
+   "email": "diego@verdantfoods.mx",
+   "name": "Diego Ramos",
+   "company": "Verdant Foods",
+   "plan": "Starter",
+   "seats": 5,
+   "status": "active",
+   "renews_on": "2027-03-03",
+   "since": "2023-09",
+   "mrr": 80.0,
+   "invoices": [
+    {
+     "number": "INV-3204",
+     "date": "2026-09-01",
+     "amount": 80.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3208",
+     "date": "2026-10-01",
+     "amount": 80.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3212",
+     "date": "2026-11-01",
+     "amount": 80.0,
+     "status": "paid"
+    }
+   ]
+  },
+  {
+   "email": "hannah@northpeak.edu",
+   "name": "Hannah Cole",
+   "company": "Northpeak University",
+   "plan": "Pro",
+   "seats": 40,
+   "status": "active",
+   "renews_on": "2027-08-15",
+   "since": "2022-03",
+   "mrr": 1960.0,
+   "invoices": [
+    {
+     "number": "INV-3218",
+     "date": "2026-09-01",
+     "amount": 1960.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3226",
+     "date": "2026-10-01",
+     "amount": 1960.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3229",
+     "date": "2026-11-01",
+     "amount": 1960.0,
+     "status": "paid"
+    }
+   ]
+  },
+  {
+   "email": "kenji@mosaiclabs.jp",
+   "name": "Kenji Watanabe",
+   "company": "Mosaic Labs",
+   "plan": "Pro",
+   "seats": 9,
+   "status": "active",
+   "renews_on": "2026-12-19",
+   "since": "2024-01",
+   "mrr": 441.0,
+   "invoices": [
+    {
+     "number": "INV-3238",
+     "date": "2026-09-01",
+     "amount": 441.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3245",
+     "date": "2026-10-01",
+     "amount": 441.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3248",
+     "date": "2026-11-01",
+     "amount": 441.0,
+     "status": "paid"
+    }
+   ]
+  },
+  {
+   "email": "olivia@fernwoodstudio.co",
+   "name": "Olivia Grant",
+   "company": "Fernwood Studio",
+   "plan": "Starter",
+   "seats": 4,
+   "status": "active",
+   "renews_on": "2027-01-22",
+   "since": "2025-10",
+   "mrr": 64.0,
+   "invoices": [
+    {
+     "number": "INV-3257",
+     "date": "2026-09-01",
+     "amount": 64.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3266",
+     "date": "2026-10-01",
+     "amount": 64.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3271",
+     "date": "2026-11-01",
+     "amount": 64.0,
+     "status": "paid"
+    }
+   ]
+  },
+  {
+   "email": "ravi@ironbridge.in",
+   "name": "Ravi Menon",
+   "company": "Ironbridge Logistics",
+   "plan": "Enterprise",
+   "seats": 140,
+   "status": "active",
+   "renews_on": "2027-04-01",
+   "since": "2025-07",
+   "mrr": 5460.0,
+   "invoices": [
+    {
+     "number": "INV-3279",
+     "date": "2026-09-01",
+     "amount": 5460.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3285",
+     "date": "2026-10-01",
+     "amount": 5460.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3293",
+     "date": "2026-11-01",
+     "amount": 5460.0,
+     "status": "paid"
+    }
+   ]
+  },
+  {
+   "email": "emma@sundialhr.com",
+   "name": "Emma Novak",
+   "company": "Sundial HR",
+   "plan": "Pro",
+   "seats": 15,
+   "status": "active",
+   "renews_on": "2027-02-27",
+   "since": "2025-03",
+   "mrr": 735.0,
+   "invoices": [
+    {
+     "number": "INV-3301",
+     "date": "2026-09-01",
+     "amount": 735.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3310",
+     "date": "2026-10-01",
+     "amount": 735.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3317",
+     "date": "2026-11-01",
+     "amount": 735.0,
+     "status": "paid"
+    }
+   ]
+  },
+  {
+   "email": "noah@pebblefinance.co",
+   "name": "Noah Kim",
+   "company": "Pebble Finance",
+   "plan": "Pro",
+   "seats": 30,
+   "status": "active",
+   "renews_on": "2026-12-11",
+   "since": "2023-08",
+   "mrr": 1470.0,
+   "invoices": [
+    {
+     "number": "INV-3322",
+     "date": "2026-09-01",
+     "amount": 1470.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3325",
+     "date": "2026-10-01",
+     "amount": 1470.0,
+     "status": "paid"
+    },
+    {
+     "number": "INV-3328",
+     "date": "2026-11-01",
+     "amount": 1470.0,
+     "status": "paid"
+    }
+   ]
+  }
+ ]
+}

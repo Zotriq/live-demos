@@ -289,3 +289,35 @@ def test_glow_desk_booking():
     sb = at.session_state["glow"]
     print("STEP glow desk reply:", sb.messages("923007654321")[-1]["content"][:300])
     assert sb.last_run and sb.last_run["status"] == 200
+
+
+RELAY_PAGES = ["views/overview.py", "views/tickets.py", "views/approvals.py", "views/ticket.py", "views/customers.py",
+               "views/knowledge.py", "views/analytics.py", "views/compose.py", "views/agents.py"]
+
+
+def test_relay_pages():
+    at = AppTest.from_file(str(ROOT / "apps" / "support" / "streamlit_app.py"), default_timeout=TIMEOUT)
+    at.run()
+    assert not at.exception, at.exception[0].message[:600]
+    for p in RELAY_PAGES[1:]:
+        at.switch_page(p).run()
+        assert not at.exception, f"{p}: {at.exception[0].message[:600]}"
+    # Approve a seeded draft: the LangGraph thread resumes from its interrupt and sends the email.
+    at.switch_page("views/approvals.py").run()
+    [b for b in at.button if b.label == "Approve"][0].click().run()
+    assert not at.exception, at.exception[0].message[:600]
+    sb = at.session_state["relay"]
+    assert sb.outbox and sb.outbox[-1]["subject"].startswith("Re: ")
+    print("STEP relay: all pages render, approval sent:", sb.outbox[-1]["subject"])
+
+
+@needs_groq
+def test_relay_live_ticket():
+    at = AppTest.from_file(str(ROOT / "apps" / "support" / "streamlit_app.py"), default_timeout=TIMEOUT)
+    at.run()
+    sb = at.session_state["relay"]
+    t = sb.new_ticket("emma@sundialhr.com", "Refund for unused seats",
+                      "We only use 9 of our 15 seats now. Can we get money back for the 6 unused seats this month?\nEmma")
+    sb.start(t)
+    print("STEP relay live:", sb.status(t), "|", (sb.pending(t) or {}).get("draft", "")[:300])
+    assert sb.status(t) in ("Needs approval", "Escalated")

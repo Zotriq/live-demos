@@ -1,0 +1,6 @@
+# Relay: the LangGraph support agents as a full helpdesk app
+streamlit==1.66.0
+langgraph>=0.4
+openai
+pandas
+altair
