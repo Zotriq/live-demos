@@ -13,6 +13,7 @@ DEMOS = [
     ("demos/n8n_lead_qualifier.py", "Claude Lead Qualifier (n8n)", "n8n-lead-qualifier", ":material/filter_alt:", "AI automation"),
     ("demos/meeting_notes.py", "Meeting Notes → ClickUp (n8n)", "meeting-notes", ":material/event_note:", "AI automation"),
     ("demos/pdf_rag.py", "PDF RAG Knowledge Assistant", "pdf-rag", ":material/picture_as_pdf:", "RAG"),
+    ("demos/hydra_rag.py", "Hydra RAG", "hydra-rag", ":material/hub:", "RAG"),
     ("demos/multitenant_rag.py", "Multi-tenant RAG SaaS", "multitenant-rag", ":material/domain:", "RAG"),
     ("demos/lead_qualifier.py", "AI Lead Qualification Agent", "lead-qualifier", ":material/leaderboard:", "AI agents"),
     ("demos/research_agent.py", "ReAct Research Agent", "research-agent", ":material/travel_explore:", "AI agents"),

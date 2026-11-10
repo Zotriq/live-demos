@@ -231,3 +231,14 @@ def test_free_web_search_tool():
     hits = DDGS().text("Karachi population", max_results=3)
     print("\n===== web search =====\n", [h.get("title") for h in hits])
     assert hits
+
+
+@needs_groq
+def test_hydra_rag():
+    at = page("hydra_rag")
+    click(at, "Use the sample")
+    at.text_input[1].set_value("How much is the daily meal allowance outside North America and Europe?")
+    [b for b in at.button if b.label == "Ask"][0].click().run()
+    a = at.session_state["hydra_answer"]
+    print("\n===== hydra rag =====\n", a.answer, [(s.filename, s.location) for s in a.sources])
+    assert "45" in a.answer

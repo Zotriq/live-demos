@@ -17,16 +17,18 @@ ROOT = Path(__file__).parent / "projects"
 REPOS = [
     "ai-phishing-detector", "postgres-performance-tuning", "sql-etl-pipeline", "postgres-mcp-server",
     "invoice-extraction-pipeline", "langgraph-support-agents", "voice-ai-receptionist", "whatsapp-ai-agent",
-    "stripe-crm-automation", "multitenant-rag-saas", "n8n-meeting-notes-to-clickup", "ai-lead-qualification-agent", "research-agent", "pdf-rag-knowledge-assistant", "dietary-estimation-system", "n8n-claude-lead-qualifier",
+    "stripe-crm-automation", "multitenant-rag-saas", "n8n-meeting-notes-to-clickup", "ai-lead-qualification-agent", "research-agent", "pdf-rag-knowledge-assistant", "dietary-estimation-system", "n8n-claude-lead-qualifier", "ahmedjavedcodes/hydra-rag",
 ]
-SKIP = {".git", ".github", "tests", "node_modules", "__pycache__", "docs", "datasets", ".gitignore", "LICENSE", "frontend"}
+SKIP = {"web", "plans", ".git", ".github", "tests", "node_modules", "__pycache__", "docs", "datasets", ".gitignore", "LICENSE", "frontend"}
 
 for repo in sys.argv[1:] or REPOS:
     with tempfile.TemporaryDirectory() as tmp:
-        subprocess.run(["git", "clone", "-q", "--depth", "1", f"https://github.com/Zotriq/{repo}", tmp], check=True)
+        full = repo if "/" in repo else f"Zotriq/{repo}"
+        repo = full.split("/")[1]
+        subprocess.run(["git", "clone", "-q", "--depth", "1", f"https://github.com/{full}", tmp], check=True)
         sha = subprocess.run(["git", "-C", tmp, "rev-parse", "--short", "HEAD"], capture_output=True, text=True).stdout.strip()
         dest = ROOT / repo
         shutil.rmtree(dest, ignore_errors=True)
         shutil.copytree(tmp, dest, ignore=lambda d, names: [n for n in names if n in SKIP or n.endswith(".ipynb")])
-        (dest / "SOURCE").write_text(f"https://github.com/Zotriq/{repo} @ {sha}\n")
+        (dest / "SOURCE").write_text(f"https://github.com/{full} @ {sha}\n")
         print(f"{repo:32} {sha}")
