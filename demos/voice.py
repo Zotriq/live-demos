@@ -109,6 +109,7 @@ def turn(c, text: str) -> None:
     c["transcript"].append(("assistant", answer))
     try:
         c["audio"] = speak(answer)
+        c.pop("tts_error", None)
     except Exception as exc:
         c["audio"] = None  # voice is a bonus; the text reply still shows
         c["tts_error"] = str(exc)[:300]
@@ -143,6 +144,9 @@ with left:
             st.markdown(text)
     if c["audio"]:
         st.audio(c["audio"], format="audio/wav", autoplay=True)
+    elif c.get("tts_error"):
+        st.caption("🔇 Spoken reply unavailable right now, so Mia is answering in text. "
+                   f"({c['tts_error'][:160]})")
     if c["transferred"]:
         st.info(f"📞 Call transferred to the front desk ({c['transferred']}).")
     if c["ended"]:
