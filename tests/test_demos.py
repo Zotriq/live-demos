@@ -194,7 +194,7 @@ def test_research_agent():
     click(at, "Research")
     print("\n===== research agent =====\n", at.session_state["research_answer"])
     for e in at.session_state["research_agent"].logger.events:
-        print(" ", e.type, str(e.payload)[:300])
+        print("STEP", e.type, str(e.payload)[:300])
     assert at.session_state["research_answer"]
 
 

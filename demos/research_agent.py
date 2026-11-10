@@ -33,6 +33,26 @@ class FreeWebSearch(WebSearchTool):
                                                   "link": h.get("href", "")} for h in hits]})
 
 
+class GroqChat:
+    """Same chat() contract as the project's GroqLLM. Groq's gpt-oss models can return empty
+    text when a stop sequence is set, so the reply is cut at "Observation:" here instead."""
+
+    def __init__(self):
+        from openai import OpenAI
+
+        self.client = OpenAI(api_key=llm.require_key(), base_url=llm.GROQ_BASE_URL)
+
+    def chat(self, messages, stop=None, model=None, **_):
+        for name in (model or llm.SMART, llm.FAST):
+            r = self.client.chat.completions.create(model=name, messages=messages, temperature=0)
+            text = r.choices[0].message.content or ""
+            for s in stop or []:
+                text = text.split(s)[0]
+            if text.strip():
+                return text
+        return text
+
+
 class StreamlitLogger(ExecutionLogger):
     def __init__(self, box):
         super().__init__(to_console=False, to_file=False)
@@ -60,7 +80,7 @@ question = st.text_input("Ask a research question", value=st.pills("Examples", E
 if st.button("Research", type="primary") and question.strip():
     if "research_agent" not in st.session_state:
         llm.require_key()
-        st.session_state.research_agent = ReActAgent(tools={"web_search": FreeWebSearch(), "file_read": FileReadTool()})
+        st.session_state.research_agent = ReActAgent(llm=GroqChat(), tools={"web_search": FreeWebSearch(), "file_read": FileReadTool()})
     agent = st.session_state.research_agent
     with st.status("Agent is working…", expanded=True) as status:
         agent.logger = StreamlitLogger(st.container())
