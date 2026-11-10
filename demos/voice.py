@@ -64,7 +64,8 @@ def speak(text: str) -> bytes | None:
             frames.append(w.readframes(w.getnframes()))
     out = io.BytesIO()
     with wave.open(out, "wb") as w:
-        w.setparams(params)
+        # Groq streams WAV with an "unknown length" header; the real length is written on close.
+        w.setparams(params._replace(nframes=0))
         for f in frames:
             w.writeframes(f)
     return out.getvalue()
