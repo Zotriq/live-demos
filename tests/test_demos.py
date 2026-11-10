@@ -205,3 +205,19 @@ def test_pdf_rag():
     answer, chunks = at.session_state["pdf_answer"]
     print("\n===== pdf rag =====\n", answer, "\n", [(c.source_file, c.page_number, round(c.score, 2)) for c in chunks])
     assert "three" in answer.lower() or "3" in answer
+
+
+def test_n8n_lead_bot_dropped():
+    at = page("n8n_lead_qualifier")
+    at.text_input[5].set_value("http://spam.example")
+    [b for b in at.button if "Submit" in b.label][0].click().run()
+    assert any("Dropped silently" in str(i.value) for i in at.info)
+
+
+@needs_groq
+def test_n8n_lead_qualifier():
+    at = page("n8n_lead_qualifier")
+    [b for b in at.button if "Submit" in b.label][0].click().run()
+    lead = at.session_state["n8n_lead"]
+    print("\n===== n8n lead =====\n", lead["score"], lead["category"], lead["reasoning"], "\n", lead["reply_body"][:300])
+    assert lead["score"] >= 50
