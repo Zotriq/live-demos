@@ -84,6 +84,7 @@ ui.header(
          "(signed JSON payload); the reply that would go back to WhatsApp is shown in the chat.",
 )
 
+st.link_button("Open the full app: Glow Desk (inbox, calendar, customers, analytics) ↗", "https://zotriq-glow-desk.streamlit.app/", type="primary")
 s = session()
 chat_col, side_col = st.columns([3, 2])
 with chat_col:
