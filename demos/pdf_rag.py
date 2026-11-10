@@ -1,17 +1,16 @@
 import os
 import tempfile
-import uuid
 from pathlib import Path
 
 import streamlit as st
 
-from lib import embed, llm, pg, ui
+from lib import embed, llm, ui
 
 repo = ui.project_path("pdf-rag-knowledge-assistant")
 import sys  # noqa: E402
 
 sys.path.insert(0, str(repo / "src"))
-from langchain_postgres import PGVector  # noqa: E402
+from langchain_core.vectorstores import InMemoryVectorStore  # noqa: E402
 from pdf_rag.config import Settings  # noqa: E402
 from pdf_rag.generation.llm_client import generate_answer  # noqa: E402
 from pdf_rag.ingestion.chunker import chunk_pages  # noqa: E402
@@ -26,15 +25,14 @@ QUESTIONS = ["How many days can I work from home?", "What is the meal allowance 
 def settings() -> Settings:
     # The project's generator uses the OpenAI SDK, which reads OPENAI_BASE_URL: point it at Groq.
     os.environ["OPENAI_BASE_URL"] = llm.GROQ_BASE_URL
-    host = pg.vector().split("host=")[1].split()[0]
     return Settings(openai_api_key=llm.require_key(), openai_chat_model=llm.SMART, primary_llm_provider="openai",
-                    database_url=f"postgresql+psycopg://postgres@/postgres?host={host}", retrieval_top_k=4)
+                    retrieval_top_k=4)
 
 
-def store(cfg: Settings) -> PGVector:
+def store(cfg: Settings) -> InMemoryVectorStore:
+    # The project stores vectors in pgvector; this free host can't load pgvector, so the demo keeps them in memory.
     if "pdf_store" not in st.session_state:
-        st.session_state.pdf_store = PGVector(embeddings=embed.LangChainEmbeddings(), use_jsonb=True,
-                                              collection_name=f"pdf_{uuid.uuid4().hex[:12]}", connection=cfg.database_url)
+        st.session_state.pdf_store = InMemoryVectorStore(embed.LangChainEmbeddings())
         st.session_state.pdf_files = []
     return st.session_state.pdf_store
 
@@ -55,7 +53,8 @@ ui.header(
     "every claim, and the assistant says so when the documents don't cover a question.",
     "pdf-rag-knowledge-assistant",
     flow=["Upload PDF", "Extract pages", "Chunk + embed", "pgvector similarity search", "Grounded answer with page citations"],
-    note="Your PDFs go into a private collection for this browser session and are thrown away when the app restarts.",
+    note="Your PDFs stay private to this browser session and are thrown away when the app restarts. "
+         "(The project stores vectors in PostgreSQL with pgvector; this free demo keeps them in memory.)",
 )
 
 try:
@@ -87,7 +86,7 @@ if st.session_state.pdf_files:
     if st.button("Ask", type="primary") and q.strip():
         try:
             with st.spinner("Searching your documents and writing a grounded answer…"):
-                hits = store(cfg).similarity_search_with_relevance_scores(q, k=cfg.retrieval_top_k)
+                hits = store(cfg).similarity_search_with_score(q, k=cfg.retrieval_top_k)
                 chunks = [RetrievedChunk(d.page_content, d.metadata.get("source_file", "?"), d.metadata.get("page_number", -1), s)
                           for d, s in hits]
                 st.session_state.pdf_answer = (generate_answer(q, chunks, cfg), chunks)

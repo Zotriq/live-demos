@@ -5,9 +5,10 @@ import streamlit as st
 from fastapi.testclient import TestClient
 from openai import OpenAI
 
-from lib import embed, llm, pg, ui
+from lib import embed, llm, pg, ui, vector_fallback
 
 repo = ui.project_path("multitenant-rag-saas")
+import rag_saas.db as rag_db  # noqa: E402
 from rag_saas.api import create_app  # noqa: E402
 from rag_saas.db import Store, create_tenant  # noqa: E402
 from rag_saas.providers import ANSWER_PROMPT  # noqa: E402
@@ -51,16 +52,24 @@ class GroqGenerator:
         return r.choices[0].message.content or ""
 
 
-@st.cache_resource(show_spinner="Starting PostgreSQL with pgvector and loading the embedding model…")
+# On this free host pgvector can't load (see lib/vector_fallback.py), so vectors are float arrays.
+rag_db.register_vector = vector_fallback.register
+
+
+@st.cache_resource(show_spinner="Starting PostgreSQL and loading the embedding model…")
 def platform():
-    admin = pg.vector()
+    base = pg.full()
+    with psycopg.connect(base, autocommit=True) as conn:
+        if not conn.execute("SELECT 1 FROM pg_database WHERE datname = 'rag'").fetchone():
+            conn.execute("CREATE DATABASE rag")
+    admin = base.replace("dbname=postgres", "dbname=rag")
     embedder = Embedder()
     # The project's schema; gen_random_uuid() is built into PostgreSQL 13+, so pgcrypto isn't needed here.
-    schema = (repo / "rag_saas" / "schema.sql").read_text().replace("{dim}", str(embedder.dim))
+    schema = vector_fallback.adapt_schema((repo / "rag_saas" / "schema.sql").read_text(), embedder.dim)
     with psycopg.connect(admin, autocommit=True) as conn:
         conn.execute(schema.replace("CREATE EXTENSION IF NOT EXISTS pgcrypto;", ""))
     host = admin.split("host=")[1].split()[0]
-    return admin, f"host={host} user=rag_app dbname=postgres", embedder
+    return admin, f"host={host} user=rag_app dbname=rag", embedder
 
 
 def session():
@@ -85,7 +94,9 @@ ui.header(
     "the application code had a bug.",
     "multitenant-rag-saas",
     flow=["API key → tenant", "SET LOCAL app.tenant_id", "pgvector search (RLS applied)", "Answer with citations", "Other tenants: 0 rows"],
-    note="Two demo companies were just created for you, each with its own documents (including one marked confidential).",
+    note="Two demo companies were just created for you, each with its own documents (including one marked confidential). "
+         "On this free host the pgvector extension can't load, so embeddings are stored as float arrays with an exact "
+         "cosine-distance operator; the row-level security is exactly the project's.",
 )
 s = session()
 me = st.radio("Signed in as", list(s["tenants"]), horizontal=True)

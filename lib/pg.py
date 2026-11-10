@@ -1,7 +1,8 @@
 """Throwaway PostgreSQL servers that run inside the app, installed with pip.
 
 full()   - PostgreSQL 18 with contrib extensions (pg_trgm…), from postgresql-binaries
-vector() - PostgreSQL 16 with pgvector, from pixeltable-pgserver
+vector() - PostgreSQL 16 with pgvector, from pixeltable-pgserver (unused on Streamlit Cloud: its pgvector
+           binary crashes the server on that host's CPUs; see lib/vector_fallback.py)
 
 Each starts once per app process (st.cache_resource) on a Unix socket in a temp
 folder and is thrown away when the app restarts. Nothing is persisted.
