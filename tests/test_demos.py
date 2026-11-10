@@ -223,3 +223,11 @@ def test_n8n_lead_qualifier():
     lead = at.session_state["n8n_lead"]
     print("\n===== n8n lead =====\n", lead["score"], lead["category"], lead["reasoning"], "\n", lead["reply_body"][:300])
     assert lead["score"] >= 50
+
+
+def test_free_web_search_tool():
+    """DuckDuckGo search (used instead of SerpAPI) returns results from this machine."""
+    from ddgs import DDGS
+    hits = DDGS().text("Karachi population", max_results=3)
+    print("\n===== web search =====\n", [h.get("title") for h in hits])
+    assert hits

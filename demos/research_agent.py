@@ -42,9 +42,16 @@ class GroqChat:
 
         self.client = OpenAI(api_key=llm.require_key(), base_url=llm.GROQ_BASE_URL)
 
+    FORMAT = ("Reply with ONE step only, in exactly this format and nothing else:\n"
+              "Thought: <one sentence>\nAction: <tool name>\nAction Input: <input>\n"
+              "or, once the observations so far are enough:\nThought: <one sentence>\nFinal Answer: <answer>\n"
+              "Never write an Observation yourself and never claim a search happened unless its Observation is above.")
+
     def chat(self, messages, stop=None, model=None, **_):
+        if stop:  # an agent step (the memory summariser calls without stop and needs no reminder)
+            messages = [*messages, {"role": "system", "content": self.FORMAT}]
         for name in (model or llm.SMART, llm.FAST):
-            r = self.client.chat.completions.create(model=name, messages=messages, temperature=0)
+            r = self.client.chat.completions.create(model=name, messages=messages, temperature=0, reasoning_effort="low")
             text = r.choices[0].message.content or ""
             for s in stop or []:
                 text = text.split(s)[0]
