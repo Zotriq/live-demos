@@ -242,3 +242,11 @@ def test_hydra_rag():
     a = at.session_state["hydra_answer"]
     print("\n===== hydra rag =====\n", a.answer, [(s.filename, s.location) for s in a.sources])
     assert "45" in a.answer
+
+
+@needs_groq
+def test_vehicle_analysis():
+    at = click(page("vehicle_analysis"), "Analyse")
+    res = at.session_state["vehicle_result"]
+    print("\n===== vehicle analysis =====\n", res["vehicle_id"], res["analysis"][:600])
+    assert res["vehicle_id"] == 55 and "coolant" in res["analysis"].lower()
