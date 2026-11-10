@@ -68,6 +68,10 @@ def vector() -> str:
         log = next(data.glob("**/*.log"), None)
         raise RuntimeError(f"PostgreSQL (pgvector) failed to start: {detail[-600:]} "
                            f"{log.read_text()[-600:] if log else ''}") from exc
-    server.psql("CREATE EXTENSION IF NOT EXISTS vector;")
     host = server.get_uri().split("host=")[-1]
-    return f"host={host} user=postgres dbname=postgres"
+    conninfo = f"host={host} user=postgres dbname=postgres"
+    import psycopg  # the package's psql helper needs system libraries the host may lack
+
+    with psycopg.connect(conninfo, autocommit=True) as conn:
+        conn.execute("CREATE EXTENSION IF NOT EXISTS vector")
+    return conninfo
