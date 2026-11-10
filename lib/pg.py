@@ -57,8 +57,17 @@ def vector() -> str:
     """Start PostgreSQL 16 with pgvector and return a libpq connection string."""
     import pixeltable_pgserver
 
+    # initdb needs a locale that exists on the server; C is always available.
+    os.environ["LC_ALL"] = os.environ["LANG"] = "C"
     data = Path(tempfile.mkdtemp(prefix="pgvec-"))
-    server = pixeltable_pgserver.get_server(data, cleanup_mode="stop")
+    try:
+        server = pixeltable_pgserver.get_server(data, cleanup_mode="stop")
+    except subprocess.CalledProcessError as exc:
+        detail = (exc.stderr or exc.output or b"")
+        detail = detail.decode(errors="replace") if isinstance(detail, bytes) else str(detail)
+        log = next(data.glob("**/*.log"), None)
+        raise RuntimeError(f"PostgreSQL (pgvector) failed to start: {detail[-600:]} "
+                           f"{log.read_text()[-600:] if log else ''}") from exc
     server.psql("CREATE EXTENSION IF NOT EXISTS vector;")
     host = server.get_uri().split("host=")[-1]
     return f"host={host} user=postgres dbname=postgres"

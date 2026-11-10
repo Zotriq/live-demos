@@ -8,10 +8,17 @@ from openai import AsyncOpenAI
 from lib import llm, ui
 
 repo = ui.project_path("ai-lead-qualification-agent")
-# Another demo (the phishing detector) has a plain app.py on the path; make sure "app" is this project's package.
-if "app" in sys.modules and not hasattr(sys.modules["app"], "__path__"):
-    del sys.modules["app"]
-sys.path.insert(0, str(repo / "backend"))
+# Another demo (the phishing detector) has a plain app.py on the path, so load this project's
+# "app" package explicitly from its own folder instead of relying on sys.path order.
+import types  # noqa: E402
+
+BACKEND = repo / "backend"
+if list(getattr(sys.modules.get("app"), "__path__", [])) != [str(BACKEND / "app")]:
+    for name in [m for m in sys.modules if m == "app" or m.startswith("app.")]:
+        del sys.modules[name]
+    pkg = types.ModuleType("app")
+    pkg.__path__ = [str(BACKEND / "app")]  # the backend's app/ is a namespace package (no __init__.py)
+    sys.modules["app"] = pkg
 from app.services.ai_lead_analyzer import AILeadAnalyzer  # noqa: E402
 from app.services.email_generator import EmailGenerator  # noqa: E402
 from app.services.scoring_engine import ScoringEngine  # noqa: E402
