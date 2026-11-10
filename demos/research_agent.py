@@ -25,10 +25,18 @@ class FreeWebSearch(WebSearchTool):
     def run(self, args: WebSearchArgs) -> str:  # type: ignore[override]
         from ddgs import DDGS
 
-        try:
-            hits = DDGS().text(args.query, max_results=config.SEARCH_RESULTS)
-        except Exception as exc:
-            return f"web_search error: {exc}"
+        hits, last = [], None
+        # Free search engines are rate-limited or flaky at times: try a few before giving up.
+        for backend in ("auto", "duckduckgo", "brave", "mojeek", "wikipedia"):
+            try:
+                hits = DDGS().text(args.query, max_results=config.SEARCH_RESULTS, backend=backend)
+            except Exception as exc:
+                last = exc
+                continue
+            if hits:
+                break
+        if not hits:
+            return f"web_search error: {last or 'no results'}. Try a shorter or different query."
         return self._format({"organic_results": [{"title": h.get("title", ""), "snippet": h.get("body", ""),
                                                   "link": h.get("href", "")} for h in hits]})
 
@@ -45,7 +53,8 @@ class GroqChat:
     FORMAT = ("Reply with ONE step only, in exactly this format and nothing else:\n"
               "Thought: <one sentence>\nAction: <tool name>\nAction Input: <input>\n"
               "or, once the observations so far are enough:\nThought: <one sentence>\nFinal Answer: <answer>\n"
-              "Never write an Observation yourself and never claim a search happened unless its Observation is above.")
+              "Never write an Observation yourself and never claim a search happened unless its Observation is above. "
+              "If a search fails, try a different query before answering; a Final Answer must answer the question.")
 
     def chat(self, messages, stop=None, model=None, **_):
         if stop:  # an agent step (the memory summariser calls without stop and needs no reminder)
