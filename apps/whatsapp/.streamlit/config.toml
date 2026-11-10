@@ -1,0 +1,18 @@
+[theme]
+base = "light"
+primaryColor = "#8b3a62"
+backgroundColor = "#fbf8f6"
+secondaryBackgroundColor = "#f4ece8"
+textColor = "#2a1f24"
+font = "'DM Sans':https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap, sans-serif"
+headingFont = "Fraunces:https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap, serif"
+headingFontWeights = [700, 650, 600]
+baseRadius = "medium"
+showSidebarBorder = true
+
+[theme.sidebar]
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f6eff3"
+
+[client]
+toolbarMode = "minimal"

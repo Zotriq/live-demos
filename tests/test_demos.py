@@ -261,3 +261,31 @@ def test_specforge():
     res = at.session_state["sf_result"]
     print("\n===== specforge =====\n", res["status"], res.get("questions"), (res.get("spec") or res.get("error") or "")[:500])
     assert res["status"] in ("done", "gathering")
+
+
+# --- Full apps (one folder each under apps/) ---------------------------------------------
+
+GLOW_PAGES = ["views/overview.py", "views/inbox.py", "views/appointments.py", "views/customers.py",
+              "views/analytics.py", "views/phone.py", "views/business.py", "views/integrations.py"]
+
+
+def test_glow_desk_pages():
+    at = AppTest.from_file(str(ROOT / "apps" / "whatsapp" / "streamlit_app.py"), default_timeout=TIMEOUT)
+    at.run()
+    assert not at.exception, at.exception[0].message[:600]
+    for p in GLOW_PAGES[1:]:
+        at.switch_page(p).run()
+        assert not at.exception, f"{p}: {at.exception[0].message[:600]}"
+    print("STEP glow desk: all", len(GLOW_PAGES), "pages render")
+
+
+@needs_groq
+def test_glow_desk_booking():
+    at = AppTest.from_file(str(ROOT / "apps" / "whatsapp" / "streamlit_app.py"), default_timeout=TIMEOUT)
+    at.run()
+    at.switch_page("views/phone.py").run()
+    at.chat_input[0].set_value("Hi, can I book a manicure the next day you're open at 3pm? My name is Ali").run()
+    assert not at.exception, at.exception[0].message[:600]
+    sb = at.session_state["glow"]
+    print("STEP glow desk reply:", sb.messages("923007654321")[-1]["content"][:300])
+    assert sb.last_run and sb.last_run["status"] == 200

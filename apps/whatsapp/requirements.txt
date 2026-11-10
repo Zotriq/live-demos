@@ -1,0 +1,7 @@
+# Glow Desk: the WhatsApp AI agent as a full salon app
+streamlit==1.66.0
+fastapi
+httpx
+openai
+pandas
+altair
