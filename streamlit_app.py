@@ -2,7 +2,12 @@
 
 import streamlit as st
 
-from lib.registry import DEMOS
+import importlib
+
+import lib.registry
+
+# Reload the page list each run so new demos appear after a git push without a server restart.
+DEMOS = importlib.reload(lib.registry).DEMOS
 
 
 st.set_page_config(page_title="Live demos · Zohaib Tariq", page_icon="⚙️", layout="wide")
