@@ -18,6 +18,8 @@ from pathlib import Path
 import streamlit as st
 
 CACHE = Path(tempfile.gettempdir()) / "zotriq-pg"
+# pixeltable_pgserver stops its server when the handle object is garbage-collected, so keep it alive.
+_HANDLES: list = []
 
 
 def _pg18_bin() -> Path:
@@ -68,6 +70,7 @@ def vector() -> str:
         log = next(data.glob("**/*.log"), None)
         raise RuntimeError(f"PostgreSQL (pgvector) failed to start: {detail[-600:]} "
                            f"{log.read_text()[-600:] if log else ''}") from exc
+    _HANDLES.append(server)
     host = server.get_uri().split("host=")[-1]
     conninfo = f"host={host} user=postgres dbname=postgres"
     import psycopg  # the package's psql helper needs system libraries the host may lack

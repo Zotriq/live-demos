@@ -193,6 +193,8 @@ def test_research_agent():
     at.text_input[0].set_value("Compare the population of Lahore and Karachi and say which is larger.")
     click(at, "Research")
     print("\n===== research agent =====\n", at.session_state["research_answer"])
+    for e in at.session_state["research_agent"].logger.events:
+        print(" ", e.type, str(e.payload)[:300])
     assert at.session_state["research_answer"]
 
 
