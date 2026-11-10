@@ -69,6 +69,7 @@ ui.header(
     flow=["Supervisor routes", "Specialist gathers facts", "Writer drafts", "QA agent reviews", "Human approves → send"],
 )
 
+st.link_button("Open the full app: Relay helpdesk (ticket queue, approvals, customers, analytics) ↗", "https://zotriq-relay-desk.streamlit.app/", type="primary")
 pick = st.pills("Sample emails", list(INBOX), default=list(INBOX)[1])
 raw = st.text_area("Incoming email (From / Subject / body)", value=INBOX.get(pick, ""), height=170, key=f"email_{pick}")
 
