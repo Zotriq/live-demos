@@ -109,8 +109,9 @@ def turn(c, text: str) -> None:
     c["transcript"].append(("assistant", answer))
     try:
         c["audio"] = speak(answer)
-    except Exception:
+    except Exception as exc:
         c["audio"] = None  # voice is a bonus; the text reply still shows
+        c["tts_error"] = str(exc)[:300]
 
 
 def hang_up(c) -> None:

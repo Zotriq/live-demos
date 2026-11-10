@@ -130,7 +130,7 @@ def test_voice_receptionist():
         print(f"{role.upper():9} {text}")
     for w in v["webhooks"]:
         print("WEBHOOK", w)
-    print("AUDIO bytes:", len(v["audio"] or b""))
+    print("AUDIO bytes:", len(v["audio"] or b""), "TTS error:", v.get("tts_error"))
     click(at, "Hang up")
     print("CALLS:", v["server"].get("/calls").json())
     assert any(w[0] == "check_availability" for w in v["webhooks"])

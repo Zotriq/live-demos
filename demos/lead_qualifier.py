@@ -8,6 +8,9 @@ from openai import AsyncOpenAI
 from lib import llm, ui
 
 repo = ui.project_path("ai-lead-qualification-agent")
+# Another demo (the phishing detector) has a plain app.py on the path; make sure "app" is this project's package.
+if "app" in sys.modules and not hasattr(sys.modules["app"], "__path__"):
+    del sys.modules["app"]
 sys.path.insert(0, str(repo / "backend"))
 from app.services.ai_lead_analyzer import AILeadAnalyzer  # noqa: E402
 from app.services.email_generator import EmailGenerator  # noqa: E402

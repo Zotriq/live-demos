@@ -39,3 +39,4 @@ tenacity
 anthropic
 langchain-openai
 langchain-text-splitters
+colorama
