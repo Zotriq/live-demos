@@ -1,0 +1,13 @@
+# Separate app: PyTorch + YOLO are too heavy to share a server with the other demos.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch
+torchvision
+ultralytics
+opencv-python-headless
+numpy
+pandas
+openpyxl
+joblib
+scikit-learn
+xgboost
+streamlit==1.66.0

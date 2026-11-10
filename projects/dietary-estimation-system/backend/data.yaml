@@ -1,0 +1,6 @@
+path: C:/Users/user/Desktop/calories estimation system/dataset
+train: images/train
+val: images/valid
+
+nc: 0
+names: []

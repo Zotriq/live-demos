@@ -1,0 +1,21 @@
+[theme]
+base = "light"
+primaryColor = "#1d6a50"
+backgroundColor = "#f1f4f2"
+secondaryBackgroundColor = "#e4ebe7"
+textColor = "#14201b"
+font = "sans serif"
+headingFont = "'Archivo', sans-serif"
+baseRadius = "small"
+
+[theme.dark]
+primaryColor = "#5cc49b"
+backgroundColor = "#0c1310"
+secondaryBackgroundColor = "#16221d"
+textColor = "#e3ebe7"
+
+[client]
+toolbarMode = "minimal"
+
+[server]
+maxUploadSize = 15
