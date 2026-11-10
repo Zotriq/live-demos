@@ -51,7 +51,12 @@ ui.header(
     note="Built with Ahmed Javed. In Claude Code this runs as the MCP tool forge_spec; here the same pipeline runs in the page.",
 )
 
-request = st.text_area("Feature request", value=st.pills("Examples", EXAMPLES) or "", height=80, key="sf_request")
+def _pick():
+    st.session_state.sf_request = st.session_state.sf_example or ""
+
+
+st.pills("Examples", EXAMPLES, key="sf_example", on_change=_pick)
+request = st.text_area("Feature request", height=80, key="sf_request")
 if st.button("Forge spec", type="primary") and request.strip():
     st.session_state.sf_answers = {}
     try:
