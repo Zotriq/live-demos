@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="72" viewBox="0 0 300 72">
+  <rect x="2" y="6" width="60" height="60" rx="16" fill="#d9480f"/>
+  <circle cx="32" cy="36" r="17" fill="none" stroke="#fff" stroke-width="4"/>
+  <path d="M32 22l5 14-5 14-5-14z" fill="#fff"/>
+  <text x="76" y="47" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="800" fill="#f3ede4">Operator OS</text>
+</svg>

@@ -1,0 +1,5 @@
+# Operator OS: an AI growth operator's workspace for a small AI agency
+streamlit==1.66.0
+openai
+pandas
+altair

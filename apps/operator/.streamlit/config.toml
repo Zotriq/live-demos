@@ -1,0 +1,19 @@
+[theme]
+base = "light"
+primaryColor = "#d9480f"
+backgroundColor = "#faf8f5"
+secondaryBackgroundColor = "#f1ece4"
+textColor = "#1f1b16"
+font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap, sans-serif"
+headingFont = "'Bricolage Grotesque':https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&display=swap, sans-serif"
+headingFontWeights = [800, 700, 700]
+baseRadius = "medium"
+showSidebarBorder = true
+
+[theme.sidebar]
+backgroundColor = "#1f1b16"
+secondaryBackgroundColor = "#2c2620"
+textColor = "#f3ede4"
+
+[client]
+toolbarMode = "minimal"

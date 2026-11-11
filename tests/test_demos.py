@@ -321,3 +321,17 @@ def test_relay_live_ticket():
     sb.start(t)
     print("STEP relay live:", sb.status(t), "|", (sb.pending(t) or {}).get("draft", "")[:300])
     assert sb.status(t) in ("Needs approval", "Escalated")
+
+
+OPS_PAGES = ["views/command.py", "views/pipeline.py", "views/team.py", "views/leaddesk.py", "views/demos.py",
+             "views/twin.py", "views/content.py", "views/about.py"]
+
+
+def test_operator_os_pages():
+    at = AppTest.from_file(str(ROOT / "apps" / "operator" / "streamlit_app.py"), default_timeout=TIMEOUT)
+    at.run()
+    assert not at.exception, at.exception[0].message[:600]
+    for p in OPS_PAGES[1:]:
+        at.switch_page(p).run()
+        assert not at.exception, f"{p}: {at.exception[0].message[:600]}"
+    print("STEP operator os: all", len(OPS_PAGES), "pages render")
