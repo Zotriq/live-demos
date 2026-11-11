@@ -2,3 +2,5 @@ __pycache__/
 *.pyc
 .streamlit/secrets.toml
 .pytest_cache/
+apps/jobradar/data/
+apps/jobradar/.env

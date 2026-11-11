@@ -335,3 +335,26 @@ def test_operator_os_pages():
         at.switch_page(p).run()
         assert not at.exception, f"{p}: {at.exception[0].message[:600]}"
     print("STEP operator os: all", len(OPS_PAGES), "pages render")
+
+
+JR_PAGES = ["views/jobs.py", "views/slack.py", "views/history.py", "views/architecture.py", "views/settings.py"]
+
+
+def test_job_radar_dedup_and_pages():
+    app = ROOT / "apps" / "jobradar"
+    sys.path.insert(0, str(app))
+    from radar.store import Store as JRStore
+    JRStore().reset()
+    at = AppTest.from_file(str(app / "streamlit_app.py"), default_timeout=TIMEOUT)
+    at.run()
+    assert not at.exception, at.exception[0].message[:600]
+    click(at, "Run discovery")
+    first = {k.label: k.value for k in at.metric}
+    click(at, "Run discovery")
+    second = {k.label: k.value for k in at.metric}
+    print("STEP job radar: run 1", first.get("New"), "new; run 2", second.get("New"), "new,", second.get("Duplicates skipped"), "skipped")
+    assert first["New"] == "22" and second["New"] == "0"
+    for p in JR_PAGES:
+        at.switch_page(p).run()
+        assert not at.exception, f"{p}: {at.exception[0].message[:600]}"
+    print("STEP job radar: all", len(JR_PAGES) + 1, "pages render")

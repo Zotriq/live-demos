@@ -1,0 +1,9 @@
+streamlit==1.66.0
+requests>=2.31
+SQLAlchemy>=2.0
+pandas>=2.1
+PyYAML>=6.0
+python-dotenv>=1.0
+openpyxl>=3.1
+# Only needed if you point DATABASE_URL at Postgres / Supabase:
+psycopg[binary]>=3.1

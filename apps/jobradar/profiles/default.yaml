@@ -1,0 +1,62 @@
+public_demo: true      # portfolio deployment: sample data first, limited live runs
+name: DevOps & Data Engineering - Canada / Remote
+notes: IT professionals placed by a recruitment firm. Prefer Canada or remote roles open to Canada.
+
+titles:
+  - DevOps Engineer
+  - Site Reliability Engineer
+  - Platform Engineer
+  - Cloud Engineer
+  - Data Engineer
+  - MLOps Engineer
+skills:
+  - Kubernetes
+  - Terraform
+  - GCP
+  - AWS
+  - Azure
+  - Python
+  - CI/CD
+  - Docker
+  - Snowflake
+  - Airflow
+  - SQL
+locations:
+  - Canada
+  - Toronto
+  - Ontario
+  - Remote
+seniority:
+  - mid
+  - senior
+exclude_title_terms:
+  - Intern
+  - Sales
+  - Recruiter
+  - Designer
+  - Marketing
+
+alert_threshold: 70        # jobs scoring this or higher are posted to Slack
+llm_prefilter: 35          # jobs below this rule score never reach the LLM (saves cost)
+max_llm_calls_per_run: 40
+slack_channel: "#new-jobs"
+
+# Public, documented job feeds only. Company handles are the part after the domain
+# on their careers page, e.g. boards.greenhouse.io/<handle>, jobs.lever.co/<handle>,
+# jobs.ashbyhq.com/<handle>. Boards that return 404 are skipped and reported.
+sources:
+  greenhouse:
+    - gitlab
+    - cloudflare
+    - datadog
+    - mongodb
+  lever:
+    - palantir
+    - spotify
+  ashby:
+    - notion
+    - ramp
+  remotive:
+    search:            # Remotive asks for max ~4 API calls a day: keep this list short
+      - devops
+    limit: 40

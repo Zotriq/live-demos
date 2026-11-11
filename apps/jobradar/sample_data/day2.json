@@ -1,0 +1,612 @@
+{
+ "greenhouse": {
+  "northwind-cloud": {
+   "jobs": [
+    {
+     "id": 4101,
+     "internal_job_id": 94101,
+     "title": "Senior DevOps Engineer",
+     "updated_at": "2026-11-12T09:00:00-05:00",
+     "requisition_id": "4101",
+     "location": {
+      "name": "Toronto, Ontario, Canada"
+     },
+     "absolute_url": "https://boards.greenhouse.io/northwind-cloud/jobs/4101",
+     "language": "en",
+     "metadata": null,
+     "content": "&amp;lt;p&amp;gt;Own our Kubernetes (GKE) platform and Terraform modules across 40 services.&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;Build CI/CD with GitHub Actions and Argo CD; improve observability with Prometheus and Grafana.&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;5+ years in DevOps or SRE, strong Python or Go. Salary range: CA$135,000 - CA$165,000.&amp;lt;/p&amp;gt;",
+     "departments": [
+      {
+       "id": 1,
+       "name": "Platform",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ],
+     "offices": [
+      {
+       "id": 1,
+       "name": "Toronto, Ontario, Canada",
+       "location": "Toronto, Ontario, Canada",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ]
+    },
+    {
+     "id": 4102,
+     "internal_job_id": 94102,
+     "title": "Site Reliability Engineer",
+     "updated_at": "2026-11-12T09:00:00-05:00",
+     "requisition_id": "4102",
+     "location": {
+      "name": "Remote - Canada"
+     },
+     "absolute_url": "https://boards.greenhouse.io/northwind-cloud/jobs/4102",
+     "language": "en",
+     "metadata": null,
+     "content": "&amp;lt;p&amp;gt;Keep a multi-region GCP footprint reliable; run incident response and SLOs.&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;Kubernetes, Terraform, Docker, Python. On-call one week in six.&amp;lt;/p&amp;gt;",
+     "departments": [
+      {
+       "id": 1,
+       "name": "Platform",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ],
+     "offices": [
+      {
+       "id": 1,
+       "name": "Remote - Canada",
+       "location": "Remote - Canada",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ]
+    },
+    {
+     "id": 4103,
+     "internal_job_id": 94103,
+     "title": "Account Executive, Enterprise Sales",
+     "updated_at": "2026-11-12T09:00:00-05:00",
+     "requisition_id": "4103",
+     "location": {
+      "name": "Toronto, Ontario, Canada"
+     },
+     "absolute_url": "https://boards.greenhouse.io/northwind-cloud/jobs/4103",
+     "language": "en",
+     "metadata": null,
+     "content": "&amp;lt;p&amp;gt;Close six-figure cloud deals with enterprise buyers in Ontario.&amp;lt;/p&amp;gt;",
+     "departments": [
+      {
+       "id": 1,
+       "name": "Sales",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ],
+     "offices": [
+      {
+       "id": 1,
+       "name": "Toronto, Ontario, Canada",
+       "location": "Toronto, Ontario, Canada",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ]
+    },
+    {
+     "id": 4105,
+     "internal_job_id": 94105,
+     "title": "Cloud Engineer, AWS",
+     "updated_at": "2026-11-12T09:00:00-05:00",
+     "requisition_id": "4105",
+     "location": {
+      "name": "Vancouver, British Columbia, Canada"
+     },
+     "absolute_url": "https://boards.greenhouse.io/northwind-cloud/jobs/4105",
+     "language": "en",
+     "metadata": null,
+     "content": "&amp;lt;p&amp;gt;Migrate workloads to AWS with Terraform, ECS and EKS. Python scripting, CI/CD pipelines.&amp;lt;/p&amp;gt;",
+     "departments": [
+      {
+       "id": 1,
+       "name": "Infrastructure",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ],
+     "offices": [
+      {
+       "id": 1,
+       "name": "Vancouver, British Columbia, Canada",
+       "location": "Vancouver, British Columbia, Canada",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ]
+    },
+    {
+     "id": 4106,
+     "internal_job_id": 94106,
+     "title": "Software Engineering Intern, Infrastructure",
+     "updated_at": "2026-11-12T09:00:00-05:00",
+     "requisition_id": "4106",
+     "location": {
+      "name": "Toronto, Ontario, Canada"
+     },
+     "absolute_url": "https://boards.greenhouse.io/northwind-cloud/jobs/4106",
+     "language": "en",
+     "metadata": null,
+     "content": "&amp;lt;p&amp;gt;Summer internship on the platform team.&amp;lt;/p&amp;gt;",
+     "departments": [
+      {
+       "id": 1,
+       "name": "Platform",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ],
+     "offices": [
+      {
+       "id": 1,
+       "name": "Toronto, Ontario, Canada",
+       "location": "Toronto, Ontario, Canada",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ]
+    },
+    {
+     "id": 4107,
+     "internal_job_id": 94107,
+     "title": "Senior Platform Engineer, Kubernetes",
+     "updated_at": "2026-11-12T09:00:00-05:00",
+     "requisition_id": "4107",
+     "location": {
+      "name": "Toronto, Ontario, Canada"
+     },
+     "absolute_url": "https://boards.greenhouse.io/northwind-cloud/jobs/4107",
+     "language": "en",
+     "metadata": null,
+     "content": "&amp;lt;p&amp;gt;Design multi-tenant Kubernetes clusters on GCP; Terraform, Helm, Argo CD; Python tooling.&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;Salary range: CA$145,000 - CA$175,000.&amp;lt;/p&amp;gt;",
+     "departments": [
+      {
+       "id": 1,
+       "name": "Platform",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ],
+     "offices": [
+      {
+       "id": 1,
+       "name": "Toronto, Ontario, Canada",
+       "location": "Toronto, Ontario, Canada",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ]
+    }
+   ],
+   "meta": {
+    "total": 6
+   }
+  },
+  "maple-data-labs": {
+   "jobs": [
+    {
+     "id": 5201,
+     "internal_job_id": 95201,
+     "title": "Senior Data Engineer",
+     "updated_at": "2026-11-12T09:00:00-05:00",
+     "requisition_id": "5201",
+     "location": {
+      "name": "Toronto, Ontario, Canada"
+     },
+     "absolute_url": "https://boards.greenhouse.io/maple-data-labs/jobs/5201",
+     "language": "en",
+     "metadata": null,
+     "content": "&amp;lt;p&amp;gt;Build batch and streaming pipelines with Airflow, dbt and Snowflake.&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;Python and SQL expert; AWS or GCP experience. Base salary $150k - $180k CAD.&amp;lt;/p&amp;gt;",
+     "departments": [
+      {
+       "id": 1,
+       "name": "Data",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ],
+     "offices": [
+      {
+       "id": 1,
+       "name": "Toronto, Ontario, Canada",
+       "location": "Toronto, Ontario, Canada",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ]
+    },
+    {
+     "id": 5202,
+     "internal_job_id": 95202,
+     "title": "Data Engineer",
+     "updated_at": "2026-11-12T09:00:00-05:00",
+     "requisition_id": "5202",
+     "location": {
+      "name": "Montreal, Quebec, Canada"
+     },
+     "absolute_url": "https://boards.greenhouse.io/maple-data-labs/jobs/5202",
+     "language": "en",
+     "metadata": null,
+     "content": "&amp;lt;p&amp;gt;Own ingestion from 30 SaaS sources into Snowflake. Airflow, Python, SQL.&amp;lt;/p&amp;gt;",
+     "departments": [
+      {
+       "id": 1,
+       "name": "Data",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ],
+     "offices": [
+      {
+       "id": 1,
+       "name": "Montreal, Quebec, Canada",
+       "location": "Montreal, Quebec, Canada",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ]
+    },
+    {
+     "id": 5203,
+     "internal_job_id": 95203,
+     "title": "Staff Machine Learning Scientist",
+     "updated_at": "2026-11-12T09:00:00-05:00",
+     "requisition_id": "5203",
+     "location": {
+      "name": "San Francisco, CA"
+     },
+     "absolute_url": "https://boards.greenhouse.io/maple-data-labs/jobs/5203",
+     "language": "en",
+     "metadata": null,
+     "content": "&amp;lt;p&amp;gt;Research ranking models. PhD preferred.&amp;lt;/p&amp;gt;",
+     "departments": [
+      {
+       "id": 1,
+       "name": "AI Research",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ],
+     "offices": [
+      {
+       "id": 1,
+       "name": "San Francisco, CA",
+       "location": "San Francisco, CA",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ]
+    },
+    {
+     "id": 5204,
+     "internal_job_id": 95204,
+     "title": "MLOps Engineer",
+     "updated_at": "2026-11-12T09:00:00-05:00",
+     "requisition_id": "5204",
+     "location": {
+      "name": "Remote - North America"
+     },
+     "absolute_url": "https://boards.greenhouse.io/maple-data-labs/jobs/5204",
+     "language": "en",
+     "metadata": null,
+     "content": "&amp;lt;p&amp;gt;Ship models to production on Kubernetes with Kubeflow and MLflow; Terraform on GCP; Python.&amp;lt;/p&amp;gt;",
+     "departments": [
+      {
+       "id": 1,
+       "name": "ML Platform",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ],
+     "offices": [
+      {
+       "id": 1,
+       "name": "Remote - North America",
+       "location": "Remote - North America",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ]
+    },
+    {
+     "id": 5205,
+     "internal_job_id": 95205,
+     "title": "Technical Recruiter",
+     "updated_at": "2026-11-12T09:00:00-05:00",
+     "requisition_id": "5205",
+     "location": {
+      "name": "Toronto, Ontario, Canada"
+     },
+     "absolute_url": "https://boards.greenhouse.io/maple-data-labs/jobs/5205",
+     "language": "en",
+     "metadata": null,
+     "content": "&amp;lt;p&amp;gt;Hire engineers across Canada.&amp;lt;/p&amp;gt;",
+     "departments": [
+      {
+       "id": 1,
+       "name": "People",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ],
+     "offices": [
+      {
+       "id": 1,
+       "name": "Toronto, Ontario, Canada",
+       "location": "Toronto, Ontario, Canada",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ]
+    },
+    {
+     "id": 5206,
+     "internal_job_id": 95206,
+     "title": "Analytics Engineer",
+     "updated_at": "2026-11-12T09:00:00-05:00",
+     "requisition_id": "5206",
+     "location": {
+      "name": "Toronto, Ontario, Canada"
+     },
+     "absolute_url": "https://boards.greenhouse.io/maple-data-labs/jobs/5206",
+     "language": "en",
+     "metadata": null,
+     "content": "&amp;lt;p&amp;gt;dbt and Snowflake modelling for finance; SQL heavy, some Python.&amp;lt;/p&amp;gt;",
+     "departments": [
+      {
+       "id": 1,
+       "name": "Data",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ],
+     "offices": [
+      {
+       "id": 1,
+       "name": "Toronto, Ontario, Canada",
+       "location": "Toronto, Ontario, Canada",
+       "parent_id": null,
+       "child_ids": []
+      }
+     ]
+    }
+   ],
+   "meta": {
+    "total": 6
+   }
+  }
+ },
+ "lever": {
+  "harbourline": [
+   {
+    "id": "a1f3c2e0-1111-4c1a-9a01-0000000000a1",
+    "text": "Platform Engineer",
+    "hostedUrl": "https://jobs.lever.co/harbourline/a1f3c2e0-1111-4c1a-9a01-0000000000a1",
+    "applyUrl": "https://jobs.lever.co/harbourline/a1f3c2e0-1111-4c1a-9a01-0000000000a1/apply",
+    "categories": {
+     "location": "Ottawa, ON",
+     "team": "Infrastructure",
+     "commitment": "Full-time",
+     "allLocations": [
+      "Ottawa, ON"
+     ]
+    },
+    "workplaceType": "hybrid",
+    "createdAt": 1794200000000,
+    "descriptionPlain": "Build an internal developer platform on Azure and Kubernetes. Terraform, Helm, CI/CD in Azure DevOps. Python for automation.",
+    "lists": [],
+    "salaryRange": {
+     "currency": "CAD",
+     "min": 120000,
+     "max": 150000,
+     "interval": "per-year-salary"
+    }
+   },
+   {
+    "id": "a1f3c2e0-2222-4c1a-9a01-0000000000a2",
+    "text": "Junior Cloud Support Associate",
+    "hostedUrl": "https://jobs.lever.co/harbourline/a1f3c2e0-2222-4c1a-9a01-0000000000a2",
+    "applyUrl": "https://jobs.lever.co/harbourline/a1f3c2e0-2222-4c1a-9a01-0000000000a2/apply",
+    "categories": {
+     "location": "Ottawa, ON",
+     "team": "Support",
+     "commitment": "Full-time",
+     "allLocations": [
+      "Ottawa, ON"
+     ]
+    },
+    "workplaceType": "onsite",
+    "createdAt": 1794200000000,
+    "descriptionPlain": "Answer customer tickets about cloud hosting. Entry level role.",
+    "lists": []
+   },
+   {
+    "id": "a1f3c2e0-3333-4c1a-9a01-0000000000a3",
+    "text": "Senior Site Reliability Engineer",
+    "hostedUrl": "https://jobs.lever.co/harbourline/a1f3c2e0-3333-4c1a-9a01-0000000000a3",
+    "applyUrl": "https://jobs.lever.co/harbourline/a1f3c2e0-3333-4c1a-9a01-0000000000a3/apply",
+    "categories": {
+     "location": "Remote, Canada",
+     "team": "Infrastructure",
+     "commitment": "Full-time",
+     "allLocations": [
+      "Remote, Canada"
+     ]
+    },
+    "workplaceType": "remote",
+    "createdAt": 1794200000000,
+    "descriptionPlain": "Lead reliability for payments infrastructure on AWS. Kubernetes, Terraform, Go or Python, incident leadership.",
+    "lists": []
+   },
+   {
+    "id": "a1f3c2e0-5555-4c1a-9a01-0000000000a5",
+    "text": "DevOps Engineer, CI/CD",
+    "hostedUrl": "https://jobs.lever.co/harbourline/a1f3c2e0-5555-4c1a-9a01-0000000000a5",
+    "applyUrl": "https://jobs.lever.co/harbourline/a1f3c2e0-5555-4c1a-9a01-0000000000a5/apply",
+    "categories": {
+     "location": "Toronto, ON",
+     "team": "Infrastructure",
+     "commitment": "Full-time",
+     "allLocations": [
+      "Toronto, ON"
+     ]
+    },
+    "workplaceType": "hybrid",
+    "createdAt": 1794200000000,
+    "descriptionPlain": "Own our CI/CD pipelines (GitHub Actions, Argo CD) and Terraform on AWS. Docker, Kubernetes, Python.",
+    "lists": [],
+    "salaryRange": {
+     "currency": "CAD",
+     "min": 115000,
+     "max": 140000,
+     "interval": "per-year-salary"
+    }
+   }
+  ]
+ },
+ "ashby": {
+  "aurora-ai": {
+   "jobs": [
+    {
+     "id": "ash-7701",
+     "title": "DevOps Engineer",
+     "location": "Toronto",
+     "department": "Engineering",
+     "employmentType": "FullTime",
+     "isRemote": false,
+     "isListed": true,
+     "descriptionPlain": "Run our GPU clusters on GCP with Kubernetes and Terraform. Docker, CI/CD, Python. Hybrid 2 days in our Toronto office.",
+     "publishedAt": "2026-11-09T14:00:00.000Z",
+     "jobUrl": "https://jobs.ashbyhq.com/aurora-ai/ash-7701",
+     "applyUrl": "https://jobs.ashbyhq.com/aurora-ai/ash-7701/application",
+     "compensation": {
+      "compensationTierSummary": "CA$125K - CA$155K"
+     }
+    },
+    {
+     "id": "ash-7702",
+     "title": "Data Engineer (Analytics)",
+     "location": "Remote (Canada)",
+     "department": "Data",
+     "employmentType": "FullTime",
+     "isRemote": true,
+     "isListed": true,
+     "descriptionPlain": "Model product analytics in Snowflake with dbt; orchestrate with Airflow; SQL and Python.",
+     "publishedAt": "2026-11-09T14:00:00.000Z",
+     "jobUrl": "https://jobs.ashbyhq.com/aurora-ai/ash-7702",
+     "applyUrl": "https://jobs.ashbyhq.com/aurora-ai/ash-7702/application"
+    },
+    {
+     "id": "ash-7703",
+     "title": "Growth Marketing Manager",
+     "location": "Toronto",
+     "department": "Marketing",
+     "employmentType": "FullTime",
+     "isRemote": false,
+     "isListed": true,
+     "descriptionPlain": "Own paid acquisition.",
+     "publishedAt": "2026-11-09T14:00:00.000Z",
+     "jobUrl": "https://jobs.ashbyhq.com/aurora-ai/ash-7703",
+     "applyUrl": "https://jobs.ashbyhq.com/aurora-ai/ash-7703/application"
+    }
+   ]
+  }
+ },
+ "remotive": {
+  "devops": {
+   "0-legal-notice": "Remotive API: credit Remotive and link back.",
+   "job-count": 6,
+   "jobs": [
+    {
+     "id": 1900001,
+     "url": "https://remotive.com/remote-jobs/devops/1900001",
+     "title": "Site Reliability Engineer",
+     "company_name": "Northwind Cloud",
+     "company_logo": "",
+     "category": "DevOps / Sysadmin",
+     "job_type": "full_time",
+     "publication_date": "2026-11-09T12:00:00",
+     "candidate_required_location": "Canada",
+     "salary": "",
+     "description": "<p>Keep a multi-region GCP footprint reliable; run incident response and SLOs.</p><p>Kubernetes, Terraform, Docker, Python.</p>"
+    },
+    {
+     "id": 1900002,
+     "url": "https://remotive.com/remote-jobs/devops/1900002",
+     "title": "DevOps Engineer (Kubernetes)",
+     "company_name": "Bluepeak Software",
+     "company_logo": "",
+     "category": "DevOps / Sysadmin",
+     "job_type": "full_time",
+     "publication_date": "2026-11-09T12:00:00",
+     "candidate_required_location": "USA, Canada",
+     "salary": "$110k - $140k",
+     "description": "<p>EKS, Terraform, GitHub Actions, Python. Fully remote across North America.</p>"
+    },
+    {
+     "id": 1900003,
+     "url": "https://remotive.com/remote-jobs/devops/1900003",
+     "title": "DevOps Engineer",
+     "company_name": "Kestrel Health",
+     "company_logo": "",
+     "category": "DevOps / Sysadmin",
+     "job_type": "contract",
+     "publication_date": "2026-11-09T12:00:00",
+     "candidate_required_location": "Europe only",
+     "salary": "",
+     "description": "<p>AWS, Terraform, Docker. Must be based in the EU time zones.</p>"
+    },
+    {
+     "id": 1900004,
+     "url": "https://remotive.com/remote-jobs/devops/1900004",
+     "title": "Customer Success Engineer",
+     "company_name": "Bluepeak Software",
+     "company_logo": "",
+     "category": "DevOps / Sysadmin",
+     "job_type": "full_time",
+     "publication_date": "2026-11-09T12:00:00",
+     "candidate_required_location": "Worldwide",
+     "salary": "",
+     "description": "<p>Help customers adopt our deployment product.</p>"
+    },
+    {
+     "id": 1900005,
+     "url": "https://remotive.com/remote-jobs/devops/1900005",
+     "title": "Platform Engineer",
+     "company_name": "Tidewater Labs",
+     "company_logo": "",
+     "category": "DevOps / Sysadmin",
+     "job_type": "full_time",
+     "publication_date": "2026-11-09T12:00:00",
+     "candidate_required_location": "Worldwide",
+     "salary": "",
+     "description": "<p>Kubernetes, Terraform, GCP, Python. Build the paved road for 200 engineers.</p>"
+    },
+    {
+     "id": 1900006,
+     "url": "https://remotive.com/remote-jobs/devops/1900006",
+     "title": "Site Reliability Engineer",
+     "company_name": "Quarry Systems",
+     "company_logo": "",
+     "category": "DevOps / Sysadmin",
+     "job_type": "full_time",
+     "publication_date": "2026-11-09T12:00:00",
+     "candidate_required_location": "Canada",
+     "salary": "CA$130k - CA$160k",
+     "description": "<p>GCP, Kubernetes, Terraform, Python. SLOs and incident response for a fintech platform.</p>"
+    }
+   ]
+  }
+ }
+}
